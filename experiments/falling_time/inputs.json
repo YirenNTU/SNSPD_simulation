@@ -1,0 +1,11 @@
+{
+  "baseline_commit": "cfc54bebda4ebc20d0cc99dafd733c74eb03ea32",
+  "source_sha256": {
+    "models/snspd_nbn_v5c.lib": "5631945c94e473d035d14be4e6c4cc6aaea54c625acf8944653ea8e0210671b6",
+    "circuits/bias_tee_and_load.inc": "93d3a782d209537d6f816436b18c993978b2e347d4ff5b427721a96bf9da045a",
+    "circuits/amplifier_chain.inc": "acc42183616909527093f892e93178c698a1a5bc709840025d5a85f51e1ebfb9",
+    "cases/geiger.json": "1bb5a04ff6c39c66bf26a544146414df4e9c03d675134a8dc958638e805726bc",
+    "cases/calorimetric.json": "c5676940123b49e7e9d450792ef1d54adbad9f1bb7462cb363ac75b11fed5902"
+  },
+  "opamp_sha256": "b840cd29f0b7b793256f2807e6468dfcc36ae0af5fe935443b33bc664e8cf77d"
+}
