@@ -22,6 +22,15 @@ It is a documented simulation baseline, not a fully validated detector model.
 The complete reference set contains **7 Geiger and 25 calorimetric cases**.
 See [validation](docs/validation.md) for measured quantities, convergence, and limitations.
 
+## Circuit schematics
+
+![Detector, bias tee, and RF readout](docs/figures/circuit_overview.png)
+
+The [circuit documentation](docs/circuit.md) includes the connections within all
+four amplifier stages. Component names, values, and node labels match the netlists.
+The [two-page PDF](docs/figures/circuit_schematics.pdf) contains both schematics;
+SVG and PNG versions and the rendering script are included.
+
 ## Quick start
 
 Requirements: Python 3.12, LTspice, and the standard `opamp.sub` supplied with LTspice.
@@ -73,6 +82,7 @@ python3 -m unittest discover -s tests -v
 | `results/figures/` | Reference behavior plots |
 | `provenance/` | Source hashes, circuit-value checks, and packaging verification |
 | `docs/` | Model equations, parameter definitions, circuit topology, and validation scope |
+| `docs/figures/`, `scripts/draw_circuit.py` | Circuit schematics and their reproducible renderer |
 
 ## Documentation
 
