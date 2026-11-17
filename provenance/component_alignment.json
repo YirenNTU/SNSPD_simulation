@@ -1,0 +1,576 @@
+[
+  [
+    {
+      "component": "C3",
+      "schematic": "52.88p",
+      "audit": "52.88p",
+      "match": true
+    },
+    {
+      "component": "C4",
+      "schematic": "52.88p",
+      "audit": "52.88p",
+      "match": true
+    },
+    {
+      "component": "R4",
+      "schematic": "1k",
+      "audit": "1k",
+      "match": true
+    },
+    {
+      "component": "R5",
+      "schematic": "1k",
+      "audit": "1k",
+      "match": true
+    },
+    {
+      "component": "R6",
+      "schematic": "15.2k",
+      "audit": "15.2k",
+      "match": true
+    },
+    {
+      "component": "R7",
+      "schematic": "100k",
+      "audit": "100k",
+      "match": true
+    },
+    {
+      "component": "C5",
+      "schematic": "52.88p",
+      "audit": "52.88p",
+      "match": true
+    },
+    {
+      "component": "C6",
+      "schematic": "52.88p",
+      "audit": "52.88p",
+      "match": true
+    },
+    {
+      "component": "R8",
+      "schematic": "1k",
+      "audit": "1k",
+      "match": true
+    },
+    {
+      "component": "R9",
+      "schematic": "1k",
+      "audit": "1k",
+      "match": true
+    },
+    {
+      "component": "R10",
+      "schematic": "123.5k",
+      "audit": "123.5k",
+      "match": true
+    },
+    {
+      "component": "R11",
+      "schematic": "100k",
+      "audit": "100k",
+      "match": true
+    },
+    {
+      "component": "R12",
+      "schematic": "10",
+      "audit": "10",
+      "match": true
+    },
+    {
+      "component": "R13",
+      "schematic": "10",
+      "audit": "10",
+      "match": true
+    },
+    {
+      "component": "R14",
+      "schematic": "15.2k",
+      "audit": "15.2k",
+      "match": true
+    },
+    {
+      "component": "R15",
+      "schematic": "100k",
+      "audit": "100k",
+      "match": true
+    },
+    {
+      "component": "C7",
+      "schematic": "1.59p",
+      "audit": "1.59p",
+      "match": true
+    },
+    {
+      "component": "C8",
+      "schematic": "1.59p",
+      "audit": "1.59p",
+      "match": true
+    },
+    {
+      "component": "R16",
+      "schematic": "10",
+      "audit": "10",
+      "match": true
+    },
+    {
+      "component": "R17",
+      "schematic": "10",
+      "audit": "10",
+      "match": true
+    },
+    {
+      "component": "R18",
+      "schematic": "123.5k",
+      "audit": "123.5k",
+      "match": true
+    },
+    {
+      "component": "R19",
+      "schematic": "100k",
+      "audit": "100k",
+      "match": true
+    },
+    {
+      "component": "C9",
+      "schematic": "1.59p",
+      "audit": "1.59p",
+      "match": true
+    },
+    {
+      "component": "C10",
+      "schematic": "1.59p",
+      "audit": "1.59p",
+      "match": true
+    },
+    {
+      "component": "R1",
+      "schematic": "10k",
+      "audit": "10k",
+      "match": true
+    },
+    {
+      "component": "R3",
+      "schematic": "20",
+      "audit": "20",
+      "match": true
+    },
+    {
+      "component": "C1",
+      "schematic": "7.957n",
+      "audit": "7.957n",
+      "match": true
+    },
+    {
+      "component": "L1",
+      "schematic": "19894n",
+      "audit": "19894n",
+      "match": true
+    },
+    {
+      "component": "R20",
+      "schematic": "50",
+      "audit": "50",
+      "match": true
+    },
+    {
+      "component": "R2",
+      "schematic": "50",
+      "audit": "50",
+      "match": true
+    },
+    {
+      "component": "C12",
+      "schematic": "30p",
+      "audit": "30p",
+      "match": true
+    }
+  ],
+  [
+    {
+      "schematic": "SNSPD_dynamic.asc",
+      "deck": "c30_b90_n10.cir",
+      "components": [
+        {
+          "name": "C3",
+          "schematic": "52.88p",
+          "deck": "52.88p",
+          "matches": true
+        },
+        {
+          "name": "C4",
+          "schematic": "52.88p",
+          "deck": "52.88p",
+          "matches": true
+        },
+        {
+          "name": "R4",
+          "schematic": "1k",
+          "deck": "1k",
+          "matches": true
+        },
+        {
+          "name": "R5",
+          "schematic": "1k",
+          "deck": "1k",
+          "matches": true
+        },
+        {
+          "name": "R6",
+          "schematic": "15.2k",
+          "deck": "15.2k",
+          "matches": true
+        },
+        {
+          "name": "R7",
+          "schematic": "100k",
+          "deck": "100k",
+          "matches": true
+        },
+        {
+          "name": "C5",
+          "schematic": "52.88p",
+          "deck": "52.88p",
+          "matches": true
+        },
+        {
+          "name": "C6",
+          "schematic": "52.88p",
+          "deck": "52.88p",
+          "matches": true
+        },
+        {
+          "name": "R8",
+          "schematic": "1k",
+          "deck": "1k",
+          "matches": true
+        },
+        {
+          "name": "R9",
+          "schematic": "1k",
+          "deck": "1k",
+          "matches": true
+        },
+        {
+          "name": "R10",
+          "schematic": "123.5k",
+          "deck": "123.5k",
+          "matches": true
+        },
+        {
+          "name": "R11",
+          "schematic": "100k",
+          "deck": "100k",
+          "matches": true
+        },
+        {
+          "name": "R12",
+          "schematic": "10",
+          "deck": "10",
+          "matches": true
+        },
+        {
+          "name": "R13",
+          "schematic": "10",
+          "deck": "10",
+          "matches": true
+        },
+        {
+          "name": "R14",
+          "schematic": "15.2k",
+          "deck": "15.2k",
+          "matches": true
+        },
+        {
+          "name": "R15",
+          "schematic": "100k",
+          "deck": "100k",
+          "matches": true
+        },
+        {
+          "name": "C7",
+          "schematic": "1.59p",
+          "deck": "1.59p",
+          "matches": true
+        },
+        {
+          "name": "C8",
+          "schematic": "1.59p",
+          "deck": "1.59p",
+          "matches": true
+        },
+        {
+          "name": "R16",
+          "schematic": "10",
+          "deck": "10",
+          "matches": true
+        },
+        {
+          "name": "R17",
+          "schematic": "10",
+          "deck": "10",
+          "matches": true
+        },
+        {
+          "name": "R18",
+          "schematic": "123.5k",
+          "deck": "123.5k",
+          "matches": true
+        },
+        {
+          "name": "R19",
+          "schematic": "100k",
+          "deck": "100k",
+          "matches": true
+        },
+        {
+          "name": "C9",
+          "schematic": "1.59p",
+          "deck": "1.59p",
+          "matches": true
+        },
+        {
+          "name": "C10",
+          "schematic": "1.59p",
+          "deck": "1.59p",
+          "matches": true
+        },
+        {
+          "name": "R1",
+          "schematic": "10k",
+          "deck": "10k",
+          "matches": true
+        },
+        {
+          "name": "R3",
+          "schematic": "20",
+          "deck": "20",
+          "matches": true
+        },
+        {
+          "name": "C1",
+          "schematic": "7.957n",
+          "deck": "7.957n",
+          "matches": true
+        },
+        {
+          "name": "L1",
+          "schematic": "19894n",
+          "deck": "19894n",
+          "matches": true
+        },
+        {
+          "name": "R20",
+          "schematic": "50",
+          "deck": "50",
+          "matches": true
+        },
+        {
+          "name": "R2",
+          "schematic": "50",
+          "deck": "50",
+          "matches": true
+        },
+        {
+          "name": "C12",
+          "schematic": "30p",
+          "deck": "30p",
+          "matches": true
+        }
+      ]
+    },
+    {
+      "schematic": "SNSPD_calorimetry.asc",
+      "deck": "asc120_b90_n10.cir",
+      "components": [
+        {
+          "name": "C3",
+          "schematic": "52.88p",
+          "deck": "52.88p",
+          "matches": true
+        },
+        {
+          "name": "C4",
+          "schematic": "52.88p",
+          "deck": "52.88p",
+          "matches": true
+        },
+        {
+          "name": "R4",
+          "schematic": "1k",
+          "deck": "1k",
+          "matches": true
+        },
+        {
+          "name": "R5",
+          "schematic": "1k",
+          "deck": "1k",
+          "matches": true
+        },
+        {
+          "name": "R6",
+          "schematic": "15.2k",
+          "deck": "15.2k",
+          "matches": true
+        },
+        {
+          "name": "R7",
+          "schematic": "100k",
+          "deck": "100k",
+          "matches": true
+        },
+        {
+          "name": "C5",
+          "schematic": "52.88p",
+          "deck": "52.88p",
+          "matches": true
+        },
+        {
+          "name": "C6",
+          "schematic": "52.88p",
+          "deck": "52.88p",
+          "matches": true
+        },
+        {
+          "name": "R8",
+          "schematic": "1k",
+          "deck": "1k",
+          "matches": true
+        },
+        {
+          "name": "R9",
+          "schematic": "1k",
+          "deck": "1k",
+          "matches": true
+        },
+        {
+          "name": "R10",
+          "schematic": "123.5k",
+          "deck": "123.5k",
+          "matches": true
+        },
+        {
+          "name": "R11",
+          "schematic": "100k",
+          "deck": "100k",
+          "matches": true
+        },
+        {
+          "name": "R12",
+          "schematic": "10",
+          "deck": "10",
+          "matches": true
+        },
+        {
+          "name": "R13",
+          "schematic": "10",
+          "deck": "10",
+          "matches": true
+        },
+        {
+          "name": "R14",
+          "schematic": "15.2k",
+          "deck": "15.2k",
+          "matches": true
+        },
+        {
+          "name": "R15",
+          "schematic": "100k",
+          "deck": "100k",
+          "matches": true
+        },
+        {
+          "name": "C7",
+          "schematic": "1.59p",
+          "deck": "1.59p",
+          "matches": true
+        },
+        {
+          "name": "C8",
+          "schematic": "1.59p",
+          "deck": "1.59p",
+          "matches": true
+        },
+        {
+          "name": "R16",
+          "schematic": "10",
+          "deck": "10",
+          "matches": true
+        },
+        {
+          "name": "R17",
+          "schematic": "10",
+          "deck": "10",
+          "matches": true
+        },
+        {
+          "name": "R18",
+          "schematic": "123.5k",
+          "deck": "123.5k",
+          "matches": true
+        },
+        {
+          "name": "R19",
+          "schematic": "100k",
+          "deck": "100k",
+          "matches": true
+        },
+        {
+          "name": "C9",
+          "schematic": "1.59p",
+          "deck": "1.59p",
+          "matches": true
+        },
+        {
+          "name": "C10",
+          "schematic": "1.59p",
+          "deck": "1.59p",
+          "matches": true
+        },
+        {
+          "name": "R1",
+          "schematic": "10k",
+          "deck": "10k",
+          "matches": true
+        },
+        {
+          "name": "R3",
+          "schematic": "20",
+          "deck": "20",
+          "matches": true
+        },
+        {
+          "name": "C1",
+          "schematic": "7.957n",
+          "deck": "7.957n",
+          "matches": true
+        },
+        {
+          "name": "L1",
+          "schematic": "19894n",
+          "deck": "19894n",
+          "matches": true
+        },
+        {
+          "name": "R20",
+          "schematic": "100000000",
+          "deck": "100000000",
+          "matches": true
+        },
+        {
+          "name": "R2",
+          "schematic": "50",
+          "deck": "50",
+          "matches": true
+        },
+        {
+          "name": "C12",
+          "schematic": "120p",
+          "deck": "120p",
+          "matches": true
+        }
+      ]
+    }
+  ]
+]

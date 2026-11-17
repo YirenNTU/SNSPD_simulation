@@ -1,0 +1,465 @@
+* SNSPD_simulation 0.1.0 research snapshot, 2026-11-17.
+* Equations and parameter defaults are unchanged from the audited numerical-review model.
+* Full 30 pF readout: tested Geiger cases recover; near-Tc energy dependence remains.
+* Near-Tc output fall-time bias trend and low-energy monotonicity remain unresolved.
+* See docs/validation.md and docs/model.md for scope and provenance.
+* Historical 150 pF retriggering below refers only to that old readout configuration.
+* Numerical representation review, 2026-11-17.
+* Physical/material parameters match snspd_nbn_v5c_tauEP_corrected.lib.
+* Wire and photon-control currents are sensed with ideal series 0 V sources.
+* The existing 10 microohm inductor series resistance is made explicit;
+* the electrical resistance and kinetic inductance are unchanged.
+* This avoids relying on quasi-static element-current references in B sources.
+* B-source current-reference caveat: Analog Devices, Behavioral Sources,
+* https://ez.analog.com/cfs-file/__key/docpreview-s/00-00-01-54-13/todaysslidedeck6141655150841730.pdf
+* Use the supplied cold-state initialisation and precision settings in the decks.
+* Numerical convergence is not validation of physical parameter values.
+* At Tb=4.68 K and Ib=0.96 Isw, the full 150 pF circuit still retriggers;
+* it does not yet reproduce the observed single-pulse stable reset.
+*************************************
+* nanowireElectrothermal_NbN_v5c
+* Experimental critical-nucleus closure; v4 remains the accepted baseline.
+*
+* Dynamic states:
+*   i(V_SN_SENSE4)  nanowire current
+*   NdTe4      fixed-seed electron temperature relative to the bath [K]
+*   NdTph4     fixed-seed phonon temperature relative to the bath [K]
+*   NRdom4     propagated full-width normal-domain resistance [ohm]
+*
+* No calorimetric/Geiger selector, reset switch, event timer, or stored mode
+* bit is used.  The two detector regimes are outcomes of the same continuous
+* electrothermal equations.  Lk remains the measured fixed inductance.
+*************************************
+
+.subckt nanowireElectrothermal_NbN_v5c gate gatereturn drain source
++ params: Lind=38n width=200n thickness=15n Iinit4=0
++ sheetRes=165 Tc=12 Tsub=4.68 Jc=46.3G C=1
++ IswBath=0 alphaIc=0.87
++ photonLambda=532n Nphoton=1 etaAbs=0.1
++ IgateRef=1u tPhotonNorm=1.25p IgateSmooth=1p
++ Lseed=15n dTsc=5m dTnuc=50m dTcHeat=50m
++ gammaCe=160 gammaCph=2.38 bcsBranchWidth=5m
++ ephExponent=5 tauEphRef=2.1p TEphRef=10
++ betaTBC=86.8 etaDiff=1 Lorenz=2.44e-8 LdiffMin=15n kappa=0.108
++ deltaU=0.05 dUsmooth=1m Fmax=20 dFsplit=1m
++ LfrontFloor=5n Fnucleation=1 finiteSizePenalty0=10 penaltyExponent=1
++ coolFluxFloorFrac=0.01 dCoolFluxFrac=1m
++ criticalCoreFactor=2 criticalScaleMultiplier=1 criticalBiasFraction=0.96
++ criticalTaylor1=0.6908182753 criticalTaylor2=0.3272607188
++ criticalTaylor3=3.879693955 criticalChiMax=0.3185
++ criticalQsmoothFrac=1m dTcriticalSmooth=1u
++ domainEnergyClosure=0 domainEnthalpyScale=1 dDomainNetFrac=1m
++ domainSuperheatClosure=0 dDomainSuperheat=1m
++ RinitDomain=0 TmaxTherm=50
+
+.PARAM kb4       = 1.380649e-23
+.PARAM hbar4     = 1.054571817e-34
+.PARAM echarge4  = 1.602176634e-19
+.PARAM pi4       = 3.141592653589793
+.PARAM tiny4     = 1e-30
+.PARAM Ephoton4  = {1.9878e-25/max(photonLambda,tiny4)}
+
+*************************************
+* Geometry and NbN material scales
+*************************************
+
+.PARAM inductivity4 = {1.38p*sheetRes/Tc}
+.PARAM length4      = {width*Lind/inductivity4}
+.PARAM squares4     = {length4/width}
+.PARAM Rnorm4       = {sheetRes*squares4}
+.PARAM Vseed4       = {width*thickness*Lseed}
+.PARAM Aseed4       = {width*Lseed}
+.PARAM RseedFull4   = {sheetRes*Lseed/width}
+.PARAM RdomainMax4  = {max(Rnorm4-RseedFull4,sheetRes*1m)}
+.PARAM RfrontFloor4 = {max(sheetRes*LfrontFloor/width,sheetRes*1u)}
+
+* Normal-state reference electron-to-phonon ENERGY relaxation time, tau_EP.
+* Corrected 2026-11-17: tauEphRef=2.1 ps at TEphRef=10 K replaces 12 ps.
+* Sidorova et al., Phys. Rev. B 102, 054501 (2020), Eq. (1), Table III:
+* https://doi.org/10.1103/PhysRevB.102.054501
+* tau_EP = tau_scattering / A(n), where
+* A(n)=3*(n+2)*Gamma(n+2)*zeta(n+2)
+*      /[2*pi^2*(2-2^(1-n))*Gamma(n)*zeta(n)].
+* Table III pairs (tau_scattering at 10 K [ps], n):
+* M-2259 (11.9,3.53), M-A853 (12.4,3.21),
+* M-A854 (15.9,3.75), M-A855 (17.5,3.77).
+* Converted tau_EP(10 K) = 1.7735, 2.3353, 2.0409, 2.2169 ps.
+* Their unweighted mean is 2.0916 ps, rounded to the nominal 2.1 ps.
+* These are 5.0--9.5 nm NbN films on Si/SiO2, not this 15 nm NbN/MgO
+* device. Treat 2.1 ps as a literature-informed reference estimate.
+* The sample spread is not a confidence interval for this device.
+* The existing m=5 heat-flow law is retained as a separate approximation;
+* it implies tau_EP,normal proportional to T^(-3), not the measured
+* sample exponents n=3.21--3.77 over their experimental range.
+* Using superconducting Ce and dynamic phonons does not give a fixed 2.1 ps
+* transient decay. The coefficient below uses the NORMAL Ce=gamma*T:
+* tau_EP,normal = Ce/G_eph = gamma*T/[m*Sigma*T^(m-1)].
+.PARAM SigmaEph4 = {gammaCe/(ephExponent*tauEphRef*
++pwr(max(TEphRef,tiny4),ephExponent-2))}
+
+* The microscopic continuum floor uses only existing material inputs:
+* gamma=(pi^2/3)k_B^2 N(E_F), sigma=e^2 N(E_F)D, and dirty-limit GL xi.
+.PARAM rhoN4       = {sheetRes*thickness}
+.PARAM DOSN4       = {3*gammaCe/(pi4*pi4*kb4*kb4)}
+.PARAM Ddirty4     = {1/(max(rhoN4,tiny4)*echarge4*echarge4*max(DOSN4,tiny4))}
+.PARAM xiDirty4    = {sqrt(pi4*hbar4*Ddirty4/
++(8*kb4*max(Tc-Tsub,1u)))}
+.PARAM LcoreCrit4  = {criticalCoreFactor*xiDirty4}
+.PARAM RcoreCrit4  = {sheetRes*LcoreCrit4/max(width,tiny4)}
+
+* The same T^4 NbN/substrate law is used for the seed and moving boundary.
+.PARAM hFront4   = {betaTBC*(Tc**4-Tsub**4)/max(Tc-Tsub,tiny4)}
+.PARAM cFront4   = {gammaCe*Tc+gammaCph*Tc**3}
+.PARAM vFront04  = {sqrt(hFront4*kappa/max(thickness,tiny4))/max(cFront4,tiny4)}
+.PARAM dRFront4  = {(2*sheetRes/max(width,tiny4))*vFront04}
+.PARAM ellTherm4 = {sqrt(kappa*thickness/max(hFront4,tiny4))}
+.PARAM RdiffPath4 = {sheetRes*max(ellTherm4,LdiffMin)/max(width,tiny4)}
+
+* Normal-domain enthalpy per unit length from the same normal-electron and
+* Debye-like phonon heat capacities used elsewhere in this compact model.
+* The optional energy closure is disabled by default so all existing v5c
+* results remain unchanged.  When enabled in an ablation, it replaces only
+* the developed-domain growth/retraction law; seed formation and the
+* short-interface penalty remain continuous and unchanged.
+.PARAM HdomainPerLength4 = {domainEnthalpyScale*width*thickness*
++(0.5*gammaCe*max(Tc*Tc-Tsub*Tsub,0)+
++0.25*gammaCph*max(Tc**4-Tsub**4,0))}
+
+*************************************
+* Measured/calibrated switching-current surface
+*************************************
+
+.PARAM IswGeom4 = {Jc*width*thickness*C*pwr(max(1-Tsub/Tc,1m),alphaIc)}
+.PARAM IswUse4  = {if(IswBath>0,IswBath,IswGeom4)}
+.PARAM Ic04     = {IswUse4/max(pwr(max(1-Tsub/Tc,1m),alphaIc),tiny4)}
+
+* The critical-nucleus map is evaluated at the prepared bias current.  It is a
+* nucleation/survival scale, not an instantaneous-current feedback state.
+* Keeping it parameteric avoids a stiff artificial loop during current
+* diversion while retaining its explicit I_bias and T_b dependence.
+.PARAM IcritRef4 = {criticalBiasFraction*IswUse4}
+.PARAM TcICritRaw4 = {Tc*(1-pwr(max(IcritRef4,0)/max(Ic04,tiny4),1/alphaIc))}
+.PARAM TcICrit4 = {0.5*(TcICritRaw4+sqrt(TcICritRaw4*TcICritRaw4+1e-8))}
+.PARAM dTiCrit4 = {0.5*((TcICrit4-Tsub)+
++sqrt((TcICrit4-Tsub)**2+dTcriticalSmooth**2))}
+.PARAM TmidCrit4 = {Tsub+0.5*dTiCrit4}
+.PARAM GepMidCrit4 = {ephExponent*SigmaEph4*thickness*
++TmidCrit4**(ephExponent-1)}
+.PARAM GtbMidCrit4 = {4*betaTBC*TmidCrit4**3}
+.PARAM lamMidCrit4 = {GepMidCrit4/max(GepMidCrit4+GtbMidCrit4,tiny4)}
+.PARAM TphMidCrit4 = {Tsub+lamMidCrit4*(TmidCrit4-Tsub)}
+.PARAM PcoolMidCrit4 = {betaTBC*width*(TphMidCrit4**4-Tsub**4)}
+.PARAM GepIntCrit4 = {ephExponent*SigmaEph4*thickness*
++TcICrit4**(ephExponent-1)}
+.PARAM GtbIntCrit4 = {4*betaTBC*TcICrit4**3}
+.PARAM lamIntCrit4 = {GepIntCrit4/max(GepIntCrit4+GtbIntCrit4,tiny4)}
+.PARAM TphIntCrit4 = {Tsub+lamIntCrit4*(TcICrit4-Tsub)}
+.PARAM PcoolIntCrit4 = {betaTBC*width*(TphIntCrit4**4-Tsub**4)}
+.PARAM PhiSCrit4 = {dTiCrit4*(4*PcoolMidCrit4+PcoolIntCrit4)/6}
+.PARAM PjLenCrit4 = {IcritRef4*IcritRef4*sheetRes/max(width,tiny4)}
+.PARAM qiRawCrit4 = {PjLenCrit4-PcoolIntCrit4}
+.PARAM qiScaleCrit4 = {criticalQsmoothFrac*
++(PjLenCrit4+sqrt(PcoolIntCrit4*PcoolIntCrit4+tiny4))}
+.PARAM qiPosCrit4 = {0.5*(qiRawCrit4+
++sqrt(qiRawCrit4*qiRawCrit4+qiScaleCrit4*qiScaleCrit4+tiny4))}
+.PARAM giCrit4 = {2*(PcoolIntCrit4-PcoolMidCrit4)/
++max(dTiCrit4,dTcriticalSmooth)}
+.PARAM chiRawCrit4 = {max(giCrit4,0)*max(PhiSCrit4,0)/
++max(qiPosCrit4*qiPosCrit4,tiny4)}
+.PARAM chiCrit4 = {criticalChiMax*
++tanh(chiRawCrit4/max(criticalChiMax,tiny4))}
+.PARAM LzeroCrit4 = {2*sqrt(2*kappa*width*thickness*
++max(PhiSCrit4,0))/max(qiPosCrit4,tiny4)}
+.PARAM LthermalRawCrit4 = {LzeroCrit4*
++(1+criticalTaylor1*chiCrit4+criticalTaylor2*chiCrit4**2+
++criticalTaylor3*chiCrit4**3)}
+.PARAM LthermalCrit4 = {length4*
++tanh(max(LthermalRawCrit4,0)/max(length4,tiny4))}
+.PARAM LcritUse4 = {(LthermalCrit4**4+LcoreCrit4**4)**0.25}
+.PARAM RcritRawUse4 = {criticalScaleMultiplier*
++sheetRes*LcritUse4/max(width,tiny4)}
+.PARAM RcritUse4 = {RdomainMax4*max(RcritRawUse4,0)/
++(RdomainMax4+max(RcritRawUse4,0))}
+
+*************************************
+* Electrical port: fixed measured Lk and electrothermal series voltage
+*************************************
+
+L_NBN4 drain NLSER4 {Lind} Rser=0 IC={Iinit4}
+R_LSER4 NLSER4 NISENSE4 1e-5
+V_SN_SENSE4 NISENSE4 NET4 0
+V_GATE_SENSE4 gate NGATESENSE4 0
+R_GATE4 NGATESENSE4 gatereturn 1e-5
+B_WIRE4 NET4 source V=v(NRwire4)*i(V_SN_SENSE4)
+
+B_IABS4 NIabs4 0 V=sqrt(i(V_SN_SENSE4)*i(V_SN_SENSE4)+1e-24)
+R_IABS4 NIabs4 0 1G
+
+* Tc(I) is the inverse of Isw(T)=Ic0*(1-T/Tc)^alphaIc.  Comparing
+* Te with Tc(I) is therefore equivalent to comparing I with Isw(Te).
+B_TCIRAW4 NTcIRaw4 0 V=Tc*(1-pwr(v(NIabs4)/max(Ic04,tiny4),1/alphaIc))
+R_TCIRAW4 NTcIRaw4 0 1G
+B_TCI4 NTcI4 0 V=0.5*(v(NTcIRaw4)+sqrt(v(NTcIRaw4)*v(NTcIRaw4)+1e-8))
+R_TCI4 NTcI4 0 1G
+
+*************************************
+* Differentiable 1D critical-nucleus compact approximation
+*
+* A Simpson estimate of the superconducting-tail cooling potential feeds the
+* small-core formula L0=2*sqrt(2*kappa*A*PhiS)/qI.  The third-order correction
+* is the fit to the independently solved 1D free-boundary map.  The result is
+* regularized by a two-interface dirty-GL scale.  No operating-mode selector
+* or event state appears in this closure.
+*************************************
+
+B_PHIS4 NphiS4 0 V=PhiSCrit4
+R_PHIS4 NphiS4 0 1G
+B_QIPOS4 NqiPos4 0 V=qiPosCrit4
+R_QIPOS4 NqiPos4 0 1G
+B_CHI4 Nchi4 0 V=chiCrit4
+R_CHI4 Nchi4 0 1G
+B_LTHERMCRIT4 NLthermCrit4 0 V=LthermalCrit4
+R_LTHERMCRIT4 NLthermCrit4 0 1G
+B_LCRIT4 NLcrit4 0 V=LcritUse4
+R_LCRIT4 NLcrit4 0 1G
+B_RCRIT4 NRcrit4 0 V=RcritUse4
+R_RCRIT4 NRcrit4 0 1G
+
+*************************************
+* Fixed-volume NbN two-temperature seed
+*************************************
+
+C_TE4 NdTe4 0 1 IC=0
+C_TPH4 NdTph4 0 1 IC=0
+R_TESTATEREF4 NdTe4 0 1G
+R_TPHSTATEREF4 NdTph4 0 1G
+
+* The temperature-rise coordinate is not clipped at zero: tiny numerical
+* excursions below the prepared bath temperature experience the ordinary
+* restoring heat flux.  The remote 1 mK absolute-temperature floor only guards
+* constitutive laws outside their domain.  The 1e9 s state-reference time
+* constant changes an 80 ns trajectory by less than 1e-16.
+B_TEUSE4 NTeUse4 0 V=min(max(Tsub+v(NdTe4),1m),TmaxTherm)
+R_TEUSE4 NTeUse4 0 1G
+B_TPHUSE4 NTphUse4 0 V=min(max(Tsub+v(NdTph4),1m),TmaxTherm)
+R_TPHUSE4 NTphUse4 0 1G
+
+* Continuous excess normal fraction relative to prepared bath equilibrium.
+B_FNRAW4 NfnRaw4 0 V=0.5*(1+tanh((v(NTeUse4)-v(NTcI4))/max(dTsc,tiny4)))
+R_FNRAW4 NfnRaw4 0 1G
+B_FNBATH4 NfnBath4 0 V=0.5*(1+tanh((Tsub-v(NTcI4))/max(dTsc,tiny4)))
+R_FNBATH4 NfnBath4 0 1G
+B_FN4 Nfn4 0 V=min(max((v(NfnRaw4)-v(NfnBath4))/
++max(1-v(NfnBath4),1e-12),0),1)
+R_FN4 Nfn4 0 1G
+B_RSEED4 NRseed4 0 V=RseedFull4*v(Nfn4)
+R_RSEED4 NRseed4 0 1G
+
+* Photon energy is the time integral of a smooth analog power pulse.
+B_IGATE4 NIgate4 0 V=sqrt(i(V_GATE_SENSE4)*i(V_GATE_SENSE4)+IgateSmooth*IgateSmooth)-IgateSmooth
+R_IGATE4 NIgate4 0 1G
+B_PPH4 NPph4 0 V=etaAbs*max(Nphoton,0)*Ephoton4*v(NIgate4)/
++max(IgateRef*tPhotonNorm,tiny4)
+R_PPH4 NPph4 0 1G
+
+*************************************
+* Positive, continuous weak-coupling BCS electronic heat capacity
+*
+* The two asymptotic fits meet at T/Tc=0.272:
+*   Ces/(gamma*Tc) = 8.5 exp[-1.44 Tc/T]                 (low T)
+*   Ces/(gamma*Tc) = -0.113 - 0.183 x + 2.775 x^2       (high T)
+* The second expression gives the BCS heat-capacity jump at Tc.  A narrow
+* tanh blend represents finite transition width and avoids a solver switch.
+*************************************
+
+B_XT4 NxT4 0 V=min(max(v(NTeUse4)/max(Tc,tiny4),1m),2)
+R_XT4 NxT4 0 1G
+B_CESLOW4 NCeSlow4 0 V=gammaCe*Tc*8.5*exp(-1.44/max(v(NxT4),1m))
+R_CESLOW4 NCeSlow4 0 1G
+B_CESHIGH4 NCeHigh4 0 V=gammaCe*Tc*max(-0.113-0.183*v(NxT4)+
++2.775*v(NxT4)*v(NxT4),tiny4)
+R_CESHIGH4 NCeHigh4 0 1G
+B_BCSBRANCH4 NbcsBranch4 0 V=0.5*(1+tanh((v(NxT4)-0.272)/
++max(bcsBranchWidth,tiny4)))
+R_BCSBRANCH4 NbcsBranch4 0 1G
+B_CES4 NCeS4 0 V=(1-v(NbcsBranch4))*v(NCeSlow4)+
++v(NbcsBranch4)*v(NCeHigh4)
+R_CES4 NCeS4 0 1G
+B_CEN4 NCeN4 0 V=gammaCe*v(NTeUse4)
+R_CEN4 NCeN4 0 1G
+B_FHEAT4 NfHeat4 0 V=0.5*(1+tanh((v(NTeUse4)-Tc)/max(dTcHeat,tiny4)))
+R_FHEAT4 NfHeat4 0 1G
+B_CEVOL4 NCeVol4 0 V=(1-v(NfHeat4))*v(NCeS4)+v(NfHeat4)*v(NCeN4)
+R_CEVOL4 NCeVol4 0 1G
+B_CPVOL4 NCpVol4 0 V=gammaCph*v(NTphUse4)**3
+R_CPVOL4 NCpVol4 0 1G
+B_CE4 NCe4 0 V=max(v(NCeVol4)*Vseed4,tiny4)
+R_CE4 NCe4 0 1G
+B_CP4 NCp4 0 V=max(v(NCpVol4)*Vseed4,tiny4)
+R_CP4 NCp4 0 1G
+
+* Conserved seed energy exchange: Peph appears with opposite signs in the
+* electron and phonon equations.  The exponent-five law is the compact dirty-
+* NbN approximation; magnitude uses the literature-informed tau_EP reference above.
+B_PJSEED4 NPjSeed4 0 V=i(V_SN_SENSE4)*i(V_SN_SENSE4)*v(NRseed4)
+R_PJSEED4 NPjSeed4 0 1G
+B_PEPH4 NPeph4 0 V=SigmaEph4*Vseed4*(v(NTeUse4)**ephExponent-
++v(NTphUse4)**ephExponent)
+R_PEPH4 NPeph4 0 1G
+B_PCOOL4 NPcool4 0 V=betaTBC*Aseed4*(v(NTphUse4)**4-Tsub**4)
+R_PCOOL4 NPcool4 0 1G
+
+* Two-arm Wiedemann-Franz diffusion with continuous superconducting
+* quasiparticle suppression.
+B_DELTA4 NDelta4 0 V=1.76*kb4*Tc*sqrt(0.5*((1-v(NTeUse4)/Tc)+
++sqrt((1-v(NTeUse4)/Tc)**2+1e-8)))
+R_DELTA4 NDelta4 0 1G
+B_KSDIFF4 NksDiff4 0 V=(1-v(NfHeat4))*
++exp(-v(NDelta4)/(kb4*max(v(NTeUse4),tiny4)))+v(NfHeat4)
+R_KSDIFF4 NksDiff4 0 1G
+B_PDIFF4 NPdiff4 0 V=etaDiff*Lorenz/max(RdiffPath4,tiny4)*
++max(v(NTeUse4)**2-Tsub**2,0)*v(NksDiff4)
+R_PDIFF4 NPdiff4 0 1G
+
+B_TERATE4 0 NdTe4 I=(v(NPph4)+v(NPjSeed4)-v(NPeph4)-v(NPdiff4))/
++max(v(NCe4),tiny4)
+B_TPHRATE4 0 NdTph4 I=(v(NPeph4)-v(NPcool4))/max(v(NCp4),tiny4)
+
+*************************************
+* Continuous 1D normal-domain moving boundary
+*************************************
+
+B_LDOMAINEDGE4 NLdomainEdge4 0 V=width*max(v(NRdom4),0)/max(sheetRes,tiny4)
+R_LDOMAINEDGE4 NLdomainEdge4 0 1G
+B_TEDGE4 NTedge4 0 V=Tsub+(v(NTeUse4)-Tsub)*
++exp(-(0.5*Lseed+0.5*v(NLdomainEdge4))/max(ellTherm4,tiny4))
+R_TEDGE4 NTedge4 0 1G
+
+* Localization ablation for a missing developed-domain temperature state.
+* The default is exactly the Tc-interface closure.  A nonzero weight lets the
+* independently evolved seed Te proxy only the positive domain superheating;
+* this is not a final distributed-domain model and is never enabled by mode.
+B_DTDOMPOS4 NdTdomPos4 0 V=0.5*((v(NTeUse4)-Tc)+
++sqrt((v(NTeUse4)-Tc)**2+dDomainSuperheat*dDomainSuperheat))
+R_DTDOMPOS4 NdTdomPos4 0 1G
+B_TDOMDRIVE4 NTdomDrive4 0 V=Tc+domainSuperheatClosure*v(NdTdomPos4)
+R_TDOMDRIVE4 NTdomDrive4 0 1G
+B_COOLRAW4 NcoolRaw4 0 V=v(NTdomDrive4)**4-v(NTedge4)**4
+R_COOLRAW4 NcoolRaw4 0 1G
+B_COOLFLOOR4 NcoolFloor4 0 V=coolFluxFloorFrac*(Tc**4-Tsub**4)
+R_COOLFLOOR4 NcoolFloor4 0 1G
+B_COOLAVAIL4 NcoolAvail4 0 V=v(NcoolFloor4)+
++0.5*((v(NcoolRaw4)-v(NcoolFloor4))+
++sqrt((v(NcoolRaw4)-v(NcoolFloor4))**2+
++(dCoolFluxFrac*(Tc**4-Tsub**4))**2))
+R_COOLAVAIL4 NcoolAvail4 0 1G
+
+B_U4 Nu4 0 V=sheetRes*(i(V_SN_SENSE4)/max(width,tiny4))**2/
++max(betaTBC*v(NcoolAvail4),betaTBC*v(NcoolFloor4))
+R_U4 Nu4 0 1G
+B_UPOS4 NuPos4 0 V=0.5*((v(Nu4)-1)+
++sqrt((v(Nu4)-1)**2+dUsmooth*dUsmooth))
+R_UPOS4 NuPos4 0 1G
+B_FRAW4 NFraw4 0 V=(v(Nu4)-2)/sqrt(max(v(NuPos4),0)+deltaU*deltaU)
+R_FRAW4 NFraw4 0 1G
+B_F4 NF4 0 V=Fmax*tanh(v(NFraw4)/max(Fmax,tiny4))
+R_F4 NF4 0 1G
+B_FPLUS4 NFplus4 0 V=0.5*(v(NF4)+sqrt(v(NF4)*v(NF4)+dFsplit*dFsplit))
+R_FPLUS4 NFplus4 0 1G
+B_FMINUS4 NFminus4 0 V=0.5*(-v(NF4)+sqrt(v(NF4)*v(NF4)+dFsplit*dFsplit))
+R_FMINUS4 NFminus4 0 1G
+
+* A photon-heated seed supplies continuous formation drive.  The finite-size
+* term is explicitly a survival penalty for overlapping S/N interfaces; it is
+* not a photon threshold and vanishes for a developed domain.
+B_DTEX4 NdTex4 0 V=max(v(NTeUse4)-Tsub,0)
+R_DTEX4 NdTex4 0 1G
+B_NNUC4 Nnuc4 0 V=v(Nfn4)*v(NdTex4)/(v(NdTex4)+max(dTnuc,tiny4))
+R_NNUC4 Nnuc4 0 1G
+B_REXIST4 Nrexist4 0 V=max(v(NRdom4),0)/
++(max(v(NRdom4),0)+RfrontFloor4)
+R_REXIST4 Nrexist4 0 1G
+B_RROOM4 Nrroom4 0 V=max(1-max(v(NRdom4),0)/RdomainMax4,0)
+R_RROOM4 Nrroom4 0 1G
+B_FPENALTY4 NFpenalty4 0 V=finiteSizePenalty0*
++pwr(max(1-Tsub/Tc,0),penaltyExponent)*
++v(NRcrit4)/(max(v(NRdom4),0)+v(NRcrit4))
+R_FPENALTY4 NFpenalty4 0 1G
+
+* Optional distributed-domain energy reduction.  For domain length Ld,
+* Ud=H'_d*Ld and Rd=Rsq*Ld/w give
+*   dRd/dt = Rd*(P'_J-P'_cool)/H'_d.
+* Positive and negative net powers are split differentiably so only growth is
+* limited by the remaining wire length.  This is a model-comparison closure,
+* not a calorimetric/Geiger selector or a reset command.
+B_PJLEN4 NPjLen4 0 V=i(V_SN_SENSE4)*i(V_SN_SENSE4)*sheetRes/max(width,tiny4)
+R_PJLEN4 NPjLen4 0 1G
+B_PCOOLLEN4 NPcoolLen4 0 V=betaTBC*width*v(NcoolAvail4)
+R_PCOOLLEN4 NPcoolLen4 0 1G
+B_PNETDOMAIN4 NPnetDomain4 0 V=v(NPjLen4)-v(NPcoolLen4)
+R_PNETDOMAIN4 NPnetDomain4 0 1G
+B_PNETSCALE4 NPnetScale4 0 V=dDomainNetFrac*
++(v(NPjLen4)+v(NPcoolLen4)+tiny4)
+R_PNETSCALE4 NPnetScale4 0 1G
+B_PNETPLUS4 NPnetPlus4 0 V=0.5*(v(NPnetDomain4)+
++sqrt(v(NPnetDomain4)*v(NPnetDomain4)+v(NPnetScale4)*v(NPnetScale4)))
+R_PNETPLUS4 NPnetPlus4 0 1G
+B_PNETMINUS4 NPnetMinus4 0 V=0.5*(-v(NPnetDomain4)+
++sqrt(v(NPnetDomain4)*v(NPnetDomain4)+v(NPnetScale4)*v(NPnetScale4)))
+R_PNETMINUS4 NPnetMinus4 0 1G
+B_DRDOMENERGY4 NdRdomEnergy4 0 V=max(v(NRdom4),0)/
++max(HdomainPerLength4,tiny4)*
++(v(NPnetPlus4)*v(Nrroom4)-v(NPnetMinus4))
+R_DRDOMENERGY4 NdRdomEnergy4 0 1G
+
+B_DRDOM4 NdRdom4 0 V=dRFront4*(1-v(Nrexist4))*v(Nnuc4)*Fnucleation*
++v(NFplus4)+v(Nrexist4)*((1-domainEnergyClosure)*dRFront4*
++(v(NFplus4)*v(Nrroom4)-v(NFminus4))+domainEnergyClosure*
++v(NdRdomEnergy4)-dRFront4*v(NFpenalty4))
+R_DRDOM4 NdRdom4 0 1G
+B_DOMAIN4 0 NRdom4 I=v(NdRdom4)
+C_DOMAIN4 NRdom4 0 1 IC={RinitDomain}
+.model DSTATE4 D(N=0.1 Is=1e-3)
+D_RDOMLOW4 0 NRdom4 DSTATE4
+
+B_RWIRE4 NRwire4 0 V=min(Rnorm4,max(v(NRseed4)+v(NRdom4),0))
+R_RWIRE4 NRwire4 0 1G
+
+*************************************
+* Diagnostics: no diagnostic feeds back into a state equation
+*************************************
+
+B_PJDOMAIN4 NPjDomain4 0 V=i(V_SN_SENSE4)*i(V_SN_SENSE4)*max(v(NRdom4),0)
+R_PJDOMAIN4 NPjDomain4 0 1G
+B_ISW4 NIsw4 0 V=IswUse4
+R_ISW4 NIsw4 0 1G
+B_IHS4 NIhs4 0 V=width*sqrt(2*betaTBC*(Tc**4-Tsub**4)/max(sheetRes,tiny4))
+R_IHS4 NIhs4 0 1G
+B_LDOMAIN4 NLdomain4 0 V=width*max(v(NRdom4),0)/max(sheetRes,tiny4)
+R_LDOMAIN4 NLdomain4 0 1G
+B_SIGMAEPH4 NSigmaEph4 0 V=SigmaEph4
+R_SIGMAEPH4 NSigmaEph4 0 1G
+B_TAUEPHREF4 NtauEphRef4 0 V=tauEphRef
+R_TAUEPHREF4 NtauEphRef4 0 1G
+B_TAUESC4 NtauEsc4 0 V=gammaCph*thickness/max(4*betaTBC,tiny4)
+R_TAUESC4 NtauEsc4 0 1G
+B_CERATIO4 NceCphTc4 0 V=gammaCe/max(gammaCph*Tc*Tc,tiny4)
+R_CERATIO4 NceCphTc4 0 1G
+B_CESRATIO4 NceSCphTc4 0 V=2.479*gammaCe/max(gammaCph*Tc*Tc,tiny4)
+R_CESRATIO4 NceSCphTc4 0 1G
+
+* Suggested traces:
+* .save V(Xwire:NRwire4) V(Xwire:NRseed4) V(Xwire:NRdom4)
+* .save V(Xwire:NTeUse4) V(Xwire:NTphUse4) V(Xwire:NTcI4)
+* .save V(Xwire:NCeVol4) V(Xwire:NCpVol4)
+* .save V(Xwire:NceCphTc4) V(Xwire:NceSCphTc4)
+* .save V(Xwire:NPph4) V(Xwire:NPjSeed4) V(Xwire:NPeph4)
+* .save V(Xwire:NPcool4) V(Xwire:NPdiff4) V(Xwire:NPjDomain4)
+* .save V(Xwire:NtauEphRef4) V(Xwire:NtauEsc4) I(Xwire:L_NBN4)
+* .save V(Xwire:NRcrit4) V(Xwire:NLcrit4) V(Xwire:NLthermCrit4)
+* .save V(Xwire:Nchi4) V(Xwire:NphiS4) V(Xwire:NqiPos4)
+* .save V(Xwire:NPjLen4) V(Xwire:NPcoolLen4) V(Xwire:NPnetDomain4)
+* .save V(Xwire:NdRdomEnergy4)
+* .save V(Xwire:NdTdomPos4) V(Xwire:NTdomDrive4)
+
+.ends nanowireElectrothermal_NbN_v5c

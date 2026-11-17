@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-17",
+  "python": "3.12.3",
+  "platform": "Darwin",
+  "ltspice": [
+    "LTspice 17.2.4 for MacOS"
+  ],
+  "packaged_case_count": 32,
+  "rerun_case_count": 7,
+  "reference_comparisons_passed": true,
+  "analysis_unit_tests_passed": 7,
+  "case_ids": [
+    "calorimetric_c30_b90_n1",
+    "calorimetric_c30_b90_n4",
+    "calorimetric_c30_b90_n10",
+    "calorimetric_c30_b60_n10",
+    "calorimetric_c30_b96_n10",
+    "calorimetric_asc120_b90_n10",
+    "geiger_c30_high_dt005"
+  ],
+  "opamp_sha256": [
+    "b840cd29f0b7b793256f2807e6468dfcc36ae0af5fe935443b33bc664e8cf77d"
+  ],
+  "max_smoke_kvl_residual_fraction": 0.004065055236065431,
+  "scope": "Reproduction of the existing numerical baseline; not full physical validation."
+}

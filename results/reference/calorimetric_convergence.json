@@ -1,0 +1,17 @@
+[
+  {
+    "case": "c30_b90_n1",
+    "peak_relative_difference_percent": 5.3759389551100156e-05,
+    "fall_difference_ps": 9.69786473348222e-08
+  },
+  {
+    "case": "c30_b90_n4",
+    "peak_relative_difference_percent": 5.811452464810074e-05,
+    "fall_difference_ps": 1.4888663635304056e-06
+  },
+  {
+    "case": "c30_b96_n10",
+    "peak_relative_difference_percent": 0.008246739484762955,
+    "fall_difference_ps": 4.5932371461887556e-05
+  }
+]
