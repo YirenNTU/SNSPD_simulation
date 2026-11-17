@@ -24,7 +24,7 @@ BLUE = "#176b91"
 MUTED = "#63758a"
 LIGHT = "#f1f6fa"
 plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 10,
-                     "svg.fonttype": "none", "pdf.fonttype": 42})
+                     "svg.fonttype": "none", "svg.hashsalt": "SNSPD_simulation", "pdf.fonttype": 42})
 
 
 def components():
@@ -145,6 +145,15 @@ def axes(fig, bounds, xlim, ylim):
     return ax
 
 
+def snspd_symbol(ax, x, y, scale=.022):
+    """Draw the installed library's original line geometry; map pins by order."""
+    asset = json.loads((ROOT / "symbols/snspd_geometry.json").read_text())
+    for x1, y1, x2, y2 in asset["lines"]:
+        wire(ax, [(x + scale*x1, y - scale*y1), (x + scale*x2, y - scale*y2)])
+    return {p["model_port"]: (x + scale*p["x"], y - scale*p["y"])
+            for p in asset["pins"]}
+
+
 def overview():
     fig = plt.figure(figsize=(16, 9.8), facecolor="white")
     fig.text(.04, .955, "Detector, bias tee, and RF readout", fontsize=21, weight="bold", color=INK)
@@ -181,12 +190,13 @@ def overview():
         ground(ax, x, 3.2)
     label(ax, 14.3, 2.36, "R20 and R2 are parallel RF shunts.\nDefault resistive parallel value: 25 Ω.", 10, MUTED)
 
-    box = Rectangle((6.65, 3.0), 3.0, 3.2, facecolor=LIGHT, edgecolor=MUTED, lw=1, linestyle="--", zorder=0)
-    ax.add_patch(box)
-    wire(ax, [(8.1, 7.2), (8.1, 6.2)])
-    element(ax, (8.1, 6.2), (8.1, 4.9), "L", "Lk\n38 nH", (8.9, 5.6))
-    element(ax, (8.1, 4.9), (8.1, 3.0), "R", "Rwire(t)", (8.9, 4.05))
-    label(ax, 6.82, 3.22, "Xwire", 10, ha="left", weight="bold")
+    pins = snspd_symbol(ax, 8.1, 4.6)
+    wire(ax, [(8.1, 7.2), pins["drain"]])
+    wire(ax, [pins["source"], (8.1, 3.0)])
+    label(ax, 8.8, 4.85, "Xwire\nSNSPD", 11, ha="left", weight="bold")
+    label(ax, 8.8, 4.13, "Internal model:\nsee SNSPD section", 8.5, MUTED, ha="left")
+    label(ax, 8.22, 5.7, "drain", 8, BLUE, ha="left")
+    label(ax, 8.22, 3.48, "source", 8, BLUE, ha="left")
     dot(ax, 8.1, 3.0, "N024", dx=.1, dy=-.25, ha="left")
     part(ax, "R3", ["N024", "0"], (8.1, 3.0), (8.1, .9), (8.8, 1.9))
     ground(ax, 8.1, .9)
@@ -195,11 +205,13 @@ def overview():
     source(ax, 3.7, 4.0, "I1", current=True)
     wire(ax, [(3.7, 3.64), (3.7, 3.1)])
     ground(ax, 3.7, 3.1)
-    wire(ax, [(3.7, 4.36), (3.7, 5.15), (6.65, 5.15)])
-    dot(ax, 3.7, 5.15, "N020", dy=.3)
-    label(ax, 6.8, 5.15, "gate", 8.5, BLUE, ha="left")
+    gx, gy = pins["gate"]
+    wire(ax, [(3.7, 4.36), (3.7, gy), (gx, gy)])
+    dot(ax, 3.7, gy, "N020", dy=.3)
+    label(ax, gx-.1, gy+.23, "gate", 8, BLUE, ha="right")
+    ground(ax, *pins["gatereturn"])
+    label(ax, gx-.1, pins["gatereturn"][1]-.48, "gatereturn", 8, BLUE, ha="right")
     label(ax, 3.7, 2.3, "Optical-control current\n1 µA pulse; 5 ps equivalent width", 9, MUTED)
-    label(ax, 6.8, 4.35, "gate return\n= ground", 8, MUTED, ha="left")
     label(ax, 2.8, .7, "All ground symbols denote node 0.", 9, MUTED)
 
     fig.text(.04, .137, "Readout variants", fontsize=11, weight="bold", color=INK)
@@ -218,7 +230,7 @@ def overview():
             cell.set_facecolor(LIGHT)
             cell.set_text_props(weight="bold")
     fig.text(.55, .137, "Representation", fontsize=11, weight="bold", color=INK)
-    fig.text(.55, .047, "The detector is shown as its electrical equivalent.\nThermal-state circuits and ideal current sensors are omitted.\nIts 10 µΩ numerical series resistance is omitted from this view.\nV1 and optical input are set by the selected case.", fontsize=9, linespacing=1.5, color=MUTED)
+    fig.text(.55, .047, "SNSPD shape follows the installed snspdWithPhotonPort symbol.\nThe photon arrow denotes model excitation; it is not a wire.\nThe meander is a symbol, not a scale drawing of the device.\nPin names follow the current model's subcircuit order.", fontsize=9, linespacing=1.5, color=MUTED)
     return fig
 
 
@@ -300,6 +312,180 @@ def amplifier():
     return fig
 
 
+def model_cards():
+    """Join SPICE continuations for exact internal-element verification."""
+    cards = []
+    for line in (ROOT / "models/snspd_nbn_v5c.lib").read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith("*"):
+            continue
+        if line.startswith("+"):
+            cards[-1] += " " + line[1:].strip()
+        else:
+            cards.append(line)
+    return {line.split()[0]: line for line in cards if not line.startswith(".")}
+
+
+INTERNAL = {}
+
+
+def internal_check(name, nodes, expected=None):
+    card = model_cards()[name]
+    fields = card.split()
+    assert fields[1:3] == nodes, (name, fields[1:3], nodes)
+    if expected is not None:
+        assert " ".join(fields[3:]) == expected, (name, fields[3:])
+    INTERNAL[name] = card
+
+
+def horizontal_source(ax, a, b, name, description, dependent=False):
+    x, y = ((a[0] + b[0])/2, a[1])
+    if dependent:
+        ax.add_patch(Polygon([(x-.42, y), (x, y+.36), (x+.42, y), (x, y-.36)],
+                             fill=False, edgecolor=INK, lw=1.45))
+        radius = .42
+    else:
+        ax.add_patch(Circle((x, y), .36, fill=False, edgecolor=INK, lw=1.45))
+        radius = .36
+    wire(ax, [a, (x-radius, y)])
+    wire(ax, [(x+radius, y), b])
+    label(ax, x-.15, y, "+", 11)
+    label(ax, x+.15, y, "−", 11)
+    label(ax, x, y+.72, name+"\n"+description, 9)
+
+
+def state_panel(ax, title, node, bname, cname, rname=None, diode=False):
+    label(ax, .3, 5.6, title, 12, ha="left", weight="bold")
+    wire(ax, [(1.3, 2.56), (1.3, 4), (6.7, 4)])
+    ax.add_patch(Circle((1.3, 2.2), .36, fill=False, edgecolor=INK, lw=1.45))
+    ax.annotate("", (1.3, 2.44), (1.3, 1.96),
+                arrowprops={"arrowstyle": "->", "color": INK, "lw": 1.3})
+    wire(ax, [(1.3, 1.84), (1.3, .9)])
+    ground(ax, 1.3, .9)
+    label(ax, 1.3, .15, bname, 8)
+    dot(ax, 4.0, 4, node, dy=.3)
+    element(ax, (4, 4), (4, .9), "C", cname+"\n1 (state scale)", (4.9, 2.15), size=8)
+    ground(ax, 4, .9)
+    internal_check(bname, ["0", node])
+    internal_check(cname, [node, "0"], "1 IC={RinitDomain}" if diode else "1 IC=0")
+    if rname:
+        element(ax, (6.7, 4), (6.7, .9), "R", "1 GΩ", (7.45, 2.15), size=8)
+        ground(ax, 6.7, .9)
+        label(ax, 6.7, .15, rname, 8)
+        internal_check(rname, [node, "0"], "1G")
+    else:
+        # Cathode above, anode below: current into the state when it goes negative.
+        wire(ax, [(6.7, 4), (6.7, 2.55)])
+        wire(ax, [(6.38, 2.55), (7.02, 2.55)])
+        ax.add_patch(Polygon([(6.4, 1.95), (7.0, 1.95), (6.7, 2.55)],
+                             fill=False, edgecolor=INK, lw=1.45))
+        wire(ax, [(6.7, 1.95), (6.7, .9)])
+        ground(ax, 6.7, .9)
+        label(ax, 7.2, 2.65, "K", 8)
+        label(ax, 7.2, 1.83, "A", 8)
+        label(ax, 6.7, .15, "D_RDOMLOW4", 8)
+        internal_check("D_RDOMLOW4", ["0", node], "DSTATE4")
+
+
+def snspd_internal():
+    fig = plt.figure(figsize=(16, 11), facecolor="white")
+    fig.text(.04, .955, "SNSPD · Internal circuit implementation", fontsize=21, weight="bold", color=INK)
+    fig.text(.04, .918, "Electrical ports and numerical state integrators from nanowireElectrothermal_NbN_v5c", fontsize=11, color=MUTED)
+    ax = axes(fig, [.04, .52, .92, .34], (0, 16), (-.2, 4.6))
+    label(ax, .3, 4.4, "Detector current path", 12, ha="left", weight="bold")
+    nodes = [(0.5, "drain / N012"), (3.6, "NLSER4"), (6.7, "NISENSE4"), (9.8, "NET4"), (14.5, "source / N024")]
+    element(ax, (.5, 2.9), (3.6, 2.9), "L", "L_NBN4\n38 nH", (2.05, 3.62))
+    element(ax, (3.6, 2.9), (6.7, 2.9), "R", "R_LSER4\n10 µΩ", (5.15, 3.62))
+    horizontal_source(ax, (6.7, 2.9), (9.8, 2.9), "V_SN_SENSE4", "0 V · current sensor")
+    horizontal_source(ax, (9.8, 2.9), (14.5, 2.9), "B_WIRE4", "V = I × Rwire", dependent=True)
+    for x, name in nodes:
+        dot(ax, x, 2.9, name, dy=-.42, ha="left" if x==.5 else "center")
+    label(ax, .3, 1.75, "Optical-control port", 12, ha="left", weight="bold")
+    horizontal_source(ax, (.5, .55), (3.6, .55), "V_GATE_SENSE4", "0 V · gate-current sensor")
+    element(ax, (3.6, .55), (6.7, .55), "R", "R_GATE4\n10 µΩ", (5.15, 1.27))
+    for x, name in [(.5, "gate / N020"), (3.6, "NGATESENSE4"), (6.7, "gatereturn / 0")]:
+        dot(ax, x, .55, name, dy=-.42, ha="left" if x==.5 else "center")
+    label(ax, 11.4, .77, "The control branch encodes absorbed optical power.\nIt is separate from the detector current path.", 10, MUTED)
+    for name, ports, value in [
+        ("L_NBN4", ["drain", "NLSER4"], "{Lind} Rser=0 IC={Iinit4}"),
+        ("R_LSER4", ["NLSER4", "NISENSE4"], "1e-5"),
+        ("V_SN_SENSE4", ["NISENSE4", "NET4"], "0"),
+        ("B_WIRE4", ["NET4", "source"], "V=v(NRwire4)*i(V_SN_SENSE4)"),
+        ("V_GATE_SENSE4", ["gate", "NGATESENSE4"], "0"),
+        ("R_GATE4", ["NGATESENSE4", "gatereturn"], "1e-5")]:
+        internal_check(name, ports, value)
+    fig.text(.04, .472, "Three auxiliary state circuits", fontsize=13, weight="bold", color=INK)
+    fig.text(.04, .443, "Their node voltages represent temperature rise or resistance. They are not physical capacitors on the detector.", fontsize=10, color=MUTED)
+    panels = [
+        ("Electron temperature rise", "NdTe4", "B_TERATE4", "C_TE4", "R_TESTATEREF4", False),
+        ("Phonon temperature rise", "NdTph4", "B_TPHRATE4", "C_TPH4", "R_TPHSTATEREF4", False),
+        ("Normal-domain resistance", "NRdom4", "B_DOMAIN4", "C_DOMAIN4", None, True)]
+    for i, data in enumerate(panels):
+        ax = axes(fig, [.025+i*.325, .13, .31, .30], (0, 8.5), (-.1, 6.1))
+        state_panel(ax, *data)
+    fig.text(.04, .092, "1 V represents 1 K at NdTe4 and NdTph4; 1 V represents 1 Ω at NRdom4. The sources inject each state's time derivative.", fontsize=9.5, color=MUTED)
+    fig.text(.04, .060, "The 1 GΩ references produce negligible temperature-state relaxation. The domain diode provides a smooth lower clamp.", fontsize=9.5, color=MUTED)
+    fig.text(.04, .028, "Algebraic B-source calculations are grouped on the following page; their reference resistors and diagnostic outputs are omitted here.", fontsize=9.5, color=MUTED)
+    return fig
+
+
+def block(ax, box, title, text, color=LIGHT):
+    x, y, w, h = box
+    ax.add_patch(Rectangle((x,y), w,h, facecolor=color, edgecolor=MUTED, lw=1.2))
+    label(ax, x+w/2, y+h-.32, title, 11, weight="bold")
+    label(ax, x+w/2, y+h/2-.13, text, 9.2, linespacing=1.6)
+
+
+def control_arrow(ax, points, text=None, text_xy=None, color=BLUE):
+    xy = np.array(points)
+    ax.plot(xy[:-1,0],xy[:-1,1],color=color,lw=1.2)
+    ax.annotate("", points[-1], points[-2], arrowprops={"arrowstyle":"->", "color":color, "lw":1.2})
+    if text:
+        label(ax, *text_xy, text, 8.4, color, bbox={"facecolor":"white", "edgecolor":"none", "pad":1})
+
+
+def snspd_feedback():
+    fig = plt.figure(figsize=(16, 11), facecolor="white")
+    fig.text(.04, .955, "SNSPD · Electrothermal model structure", fontsize=21, weight="bold", color=INK)
+    fig.text(.04, .918, "One continuous model for both regimes · Arrows denote model dependencies or heat flow, not electrical wires", fontsize=11, color=MUTED)
+    ax = axes(fig,[.03,.16,.94,.69], (0,16), (0,9.2))
+    # Top row: seed energy balance and heat removal.
+    block(ax,(.3,7.2,2.9,1.6),"Optical input", "$P_{opt}(t)$ from gate current\nB_PPH4")
+    block(ax,(4.25,7.0,5.4,2.0),"Seed electrons · state $T_e$", "$C_e\\dot T_e=P_{opt}+I^2R_{seed}-P_{e-ph}-P_{diff}$\nB_TERATE4 / C_TE4")
+    block(ax,(11.0,7.0,4.7,2.0),"Seed phonons · state $T_{ph}$", "$C_{ph}\\dot T_{ph}=P_{e-ph}-P_{sub}$\nB_TPHRATE4 / C_TPH4")
+    control_arrow(ax,[(3.2,8),(4.25,8)])
+    control_arrow(ax,[(9.65,8),(11.0,8)],"$P_{e-ph}$",(10.32,8.28))
+    control_arrow(ax,[(15.7,7.65),(15.95,7.65),(15.95,6.15),(14.3,6.15)],"$P_{sub}$",(15.5,6.6))
+    label(ax,13.25,6.15,"Bath $T_b$",11,MUTED)
+    control_arrow(ax,[(9.3,7),(9.3,6.15),(12.1,6.15)],"$P_{diff}$",(10.6,6.15))
+    # Middle row: constitutive and domain calculations.
+    block(ax,(.3,3.4,3.3,2.35),"Electrical state · $I$", "$L_k\\dot I=V_d-V_s$\n$-I(R_s+R_{wire})$\nL_NBN4 / B_WIRE4")
+    block(ax,(4.25,3.7,5.4,2.05),"Seed resistance", "$R_{seed}=R_{seed,full}f_n(T_e,T_c(I))$\nB_FN4 / B_RSEED4\n$T_c(I)$ from switching-current surface")
+    block(ax,(11.0,3.15,4.7,2.6),"Domain · state $R_d$", "Formation + growth − retraction\nFinite-size penalty uses $R_c(I_b,T_b)$\nB_DRDOM4 / B_DOMAIN4\nC_DOMAIN4")
+    control_arrow(ax,[(6.9,7),(6.9,5.75)],"$T_e$",(7.2,6.4))
+    control_arrow(ax,[(3.6,4.55),(4.25,4.55)],"$I$",(3.91,4.8))
+    control_arrow(ax,[(4.8,5.75),(4.8,7)],"$I^2R_{seed}$",(4.4,6.4))
+    control_arrow(ax,[(9.65,4.55),(11,4.55)],"Seed drive",(10.32,4.8))
+    control_arrow(ax,[(8.7,7),(8.7,6.45),(12.0,6.45),(12.0,5.75)],"$T_e$ → edge-temperature closure",(10.2,6.76))
+    control_arrow(ax,[(1.95,3.4),(1.95,2.7),(13.5,2.7),(13.5,3.15)],"$I^2$ → domain-front drive",(10.1,2.7))
+    # Bottom: resistance closes the electrical feedback loop.
+    block(ax,(4.25,.25,5.4,1.65),"Total wire resistance", "$R_{wire}=\\min[R_n,\\max(R_{seed}+R_d,0)]$\nB_RWIRE4 → B_WIRE4")
+    control_arrow(ax,[(6.9,3.7),(6.9,1.9)],"$R_{seed}$",(7.38,2.2))
+    control_arrow(ax,[(15,3.15),(15,1.08),(9.65,1.08)],"$R_d$",(12,1.08))
+    control_arrow(ax,[(4.25,1.08),(1.0,1.08),(1.0,3.4)],"$R_{wire}$",(2.6,1.08))
+    fig.text(.04,.111,"Four dynamic states: wire current I, seed electron temperature Te, seed phonon temperature Tph, and normal-domain resistance Rd.",fontsize=10,color=MUTED)
+    fig.text(.04,.078,"Default closure: domainEnergyClosure = 0; domainSuperheatClosure = 0. The domain has no independent temperature or energy state.",fontsize=10,color=MUTED)
+    fig.text(.04,.045,"Domain Joule power I²Rd is a diagnostic; the seed electron equation includes I²Rseed. No Geiger/calorimetric mode switch is present.",fontsize=10,color=MUTED)
+    fig.text(.04,.014,"Smooth bounds, heat-capacity laws, and the critical-nucleus calculation are defined in the model library and detailed in docs/snspd.md.",fontsize=9,color=MUTED)
+    for name, node in [("B_PPH4", "NPph4"), ("B_PJSEED4", "NPjSeed4"),
+                       ("B_PEPH4", "NPeph4"), ("B_PCOOL4", "NPcool4"),
+                       ("B_PDIFF4", "NPdiff4"), ("B_FN4", "Nfn4"),
+                       ("B_RSEED4", "NRseed4"), ("B_DRDOM4", "NdRdom4"),
+                       ("B_RWIRE4", "NRwire4"), ("B_PJDOMAIN4", "NPjDomain4")]:
+        internal_check(name, [node, "0"])
+    return fig
+
+
 def main():
     out = ROOT / "docs" / "figures"
     out.mkdir(exist_ok=True)
@@ -310,6 +496,10 @@ def main():
     assert "I1 0 N020 PULSE(0 1u 5n 1p 1p 4p 4000n)" in generated
     assert "V1 N001 0 {I_bias*(10000+20)}" in generated
     assert "Lind=38n" in (ROOT / "models/snspd_nbn_v5c.lib").read_text()
+    symbol = json.loads((ROOT / "symbols/snspd_geometry.json").read_text())
+    assert {p["order"]: p["model_port"] for p in symbol["pins"]} == {
+        1: "gate", 2: "gatereturn", 3: "drain", 4: "source"}
+    assert ".subckt nanowireElectrothermal_NbN_v5c gate gatereturn drain source" in (ROOT / "models/snspd_nbn_v5c.lib").read_text()
     # Expanded parasitic symbols and the default-value table use these values.
     assert NET["L1"]["value"] == "19894n Cpar=1p"
     assert NET["C1"]["value"] == "7.957n Rser=1"
@@ -321,22 +511,27 @@ def main():
         assert (case["C_pF"], case["R20_ohm"]) == (capacitance, shunt)
     for name in ["XU2", "XU3", "XU4", "XU5"]:
         assert NET[name]["value"] == "opamp Aol=100K GBW=10000Meg"
-    figures = [("circuit_overview", overview()), ("amplifier_stages", amplifier())]
+    figures = [("circuit_overview", overview()), ("amplifier_stages", amplifier()),
+               ("snspd_internal_circuit", snspd_internal()), ("snspd_electrothermal_structure", snspd_feedback())]
     if set(DRAWN) != set(NET):
         raise ValueError("Unrepresented external components: " + str(set(NET) - set(DRAWN)))
     with PdfPages(out / "circuit_schematics.pdf") as pdf:
         for name, fig in figures:
-            fig.savefig(out / (name + ".svg"))
+            svg = out / (name + ".svg")
+            fig.savefig(svg, metadata={"Date": None})
+            svg.write_text("\n".join(line.rstrip() for line in svg.read_text().splitlines()) + "\n")
             fig.savefig(out / (name + ".png"), dpi=180)
             pdf.savefig(fig)
             plt.close(fig)
-    sources = ["circuits/bias_tee_and_load.inc", "circuits/amplifier_chain.inc", "snspdtool/core.py", "models/snspd_nbn_v5c.lib"]
-    manifest = {"external_components_checked": len(NET), "components": DRAWN,
+    sources = ["circuits/bias_tee_and_load.inc", "circuits/amplifier_chain.inc", "snspdtool/core.py", "models/snspd_nbn_v5c.lib", "symbols/snspd_geometry.json"]
+    manifest = {"figure_count": len(figures), "external_components_checked": len(NET), "components": DRAWN,
                 "additional_ports_checked": {"Xwire": ["N020", "0", "N012", "N024"], "I1": ["0", "N020"], "V1": ["N001", "0"]},
-                "omitted_detector_details": ["thermal-state auxiliaries", "ideal current sensors", "10 microohm numerical series resistance"],
+                "internal_elements_checked": INTERNAL,
+                "symbol_ports": json.loads((ROOT / "symbols/snspd_geometry.json").read_text())["pins"],
+                "internal_representation": "Electrical port and state circuits are explicit; algebraic B sources are grouped in a dependency diagram.",
                 "source_sha256": {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in sources}}
     (ROOT / "provenance/circuit_diagram_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    print(f"Rendered two schematics; checked all {len(NET)} external components and three generated-deck elements.")
+    print(f"Rendered four figures; checked {len(NET)} external components, {len(INTERNAL)} internal elements, and generated-deck ports.")
 
 
 if __name__ == "__main__":

@@ -2,18 +2,19 @@
 
 The package retains the complete external circuit. The schematics below show the
 connections and values in the simulation netlists for both operating regimes.
-Download the [two-page vector PDF](figures/circuit_schematics.pdf),
+Download the [four-page vector PDF](figures/circuit_schematics.pdf),
 [overview SVG](figures/circuit_overview.svg), or
 [amplifier SVG](figures/amplifier_stages.svg).
 
 ![Detector, bias tee, and RF readout](figures/circuit_overview.png)
 
 Identical node labels denote the same electrical net; every ground symbol is
-node `0`. The detector is shown as its reduced electrical equivalent, with
-38 nH kinetic inductance and time-dependent wire resistance. Its internal thermal
-circuits, ideal current sensors, and 10 µΩ numerical series resistance are omitted
-from the drawing. The optical-control source drives `gate` at `N020`; its return
+node `0`. The detector uses the original meander and photon-arrow geometry from
+the installed `snspdWithPhotonPort.asy` symbol. Its current-model ports are mapped
+by `SpiceOrder`. The optical-control source drives `gate` at `N020`; its return
 is grounded. This control current represents optical input to the model.
+The separate [SNSPD section](snspd.md) shows the internal electrical path,
+state integrators, and electrothermal feedback.
 
 The coupling capacitor has a 1 Ω series resistance. The bias inductor includes
 1 pF parallel capacitance. The 20 Ω resistor is in the detector source return;
@@ -71,7 +72,8 @@ operating points.
 
 Run `python3 scripts/draw_circuit.py` from the repository root. The renderer
 checks the drawn node connections for all 37 components in the two external
-circuit files, as well as the generated source polarities and detector ports.
+circuit files, 25 internal model elements, and the generated source polarities
+and detector ports. The symbol geometry is stored in `symbols/snspd_geometry.json`.
 It writes PNG, SVG, and PDF figures to `docs/figures/` and a component/node manifest
 to `provenance/circuit_diagram_manifest.json`. A topology change requires updating
 the drawing layout. These checks establish agreement with the netlists, not

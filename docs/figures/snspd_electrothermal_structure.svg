@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1152pt" height="792pt" viewBox="0 0 1152 792" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.8.4, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 792
+L 1152 792
+L 1152 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 118.62 237.6
+L 290.88 237.6
+L 290.88 142.56
+L 118.62 142.56
+z
+" clip-path="url(#pffbc69501d)" style="fill: #f1f6fa; stroke: #63758a; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 353.25 249.48
+L 674.01 249.48
+L 674.01 130.68
+L 353.25 130.68
+z
+" clip-path="url(#pffbc69501d)" style="fill: #f1f6fa; stroke: #63758a; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 754.2 249.48
+L 1033.38 249.48
+L 1033.38 130.68
+L 754.2 130.68
+z
+" clip-path="url(#pffbc69501d)" style="fill: #f1f6fa; stroke: #63758a; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 118.62 463.32
+L 314.64 463.32
+L 314.64 323.73
+L 118.62 323.73
+z
+" clip-path="url(#pffbc69501d)" style="fill: #f1f6fa; stroke: #63758a; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 353.25 445.5
+L 674.01 445.5
+L 674.01 323.73
+L 353.25 323.73
+z
+" clip-path="url(#pffbc69501d)" style="fill: #f1f6fa; stroke: #63758a; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 754.2 478.17
+L 1033.38 478.17
+L 1033.38 323.73
+L 754.2 323.73
+z
+" clip-path="url(#pffbc69501d)" style="fill: #f1f6fa; stroke: #63758a; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 353.25 650.43
+L 674.01 650.43
+L 674.01 552.42
+L 353.25 552.42
+z
+" clip-path="url(#pffbc69501d)" style="fill: #f1f6fa; stroke: #63758a; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 290.88 190.08
+" clip-path="url(#pffbc69501d)" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 674.01 190.08
+" clip-path="url(#pffbc69501d)" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 1033.38 210.87
+L 1048.23 210.87
+L 1048.23 299.97
+" clip-path="url(#pffbc69501d)" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 653.22 249.48
+L 653.22 299.97
+" clip-path="url(#pffbc69501d)" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_5">
+    <path d="M 510.66 249.48
+" clip-path="url(#pffbc69501d)" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_6">
+    <path d="M 314.64 395.01
+" clip-path="url(#pffbc69501d)" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_7">
+    <path d="M 385.92 323.73
+" clip-path="url(#pffbc69501d)" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_8">
+    <path d="M 674.01 395.01
+" clip-path="url(#pffbc69501d)" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_9">
+    <path d="M 617.58 249.48
+L 617.58 282.15
+L 813.6 282.15
+" clip-path="url(#pffbc69501d)" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_10">
+    <path d="M 216.63 463.32
+L 216.63 504.9
+L 902.7 504.9
+" clip-path="url(#pffbc69501d)" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_11">
+    <path d="M 510.66 445.5
+" clip-path="url(#pffbc69501d)" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_12">
+    <path d="M 991.8 478.17
+L 991.8 601.128
+" clip-path="url(#pffbc69501d)" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_13">
+    <path d="M 353.25 601.128
+L 160.2 601.128
+" clip-path="url(#pffbc69501d)" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="fill: #263445; font: 700 11px 'DejaVu Sans'; text-anchor: middle" x="204.75" y="164.603313" transform="rotate(-0 204.75 164.603313)">Optical input</text>
+   </g>
+   <g id="text_2">
+    <!-- $P_{opt}(t)$ from gate current -->
+    <g style="fill: #263445" transform="translate(148.814 193.194956)">
+     <text>
+      <tspan style="font: oblique 9.2px 'DejaVu Sans'" x="0 20.043262" y="-0.15625">Pt</tspan>
+      <tspan style="font: oblique 6.44px 'DejaVu Sans'" x="5.578003 9.539514 13.649622" y="1.3203125">opt</tspan>
+      <tspan style="font: 9.2px 'DejaVu Sans'" x="16.434497 23.670093 27.278857 30.219165 33.475635 37.278613 42.937915 51.948535 54.888843 60.760425 66.42876 70.055591 75.746509 78.686816 83.77251 89.635059 93.438037 97.241016 102.931934 108.794482" y="-0.15625">() from gate current</tspan>
+     </text>
+    </g>
+    <text style="fill: #263445; font: 9.2px 'DejaVu Sans'" transform="translate(187.360562 207.231856)">B_PPH4</text>
+   </g>
+   <g id="text_3">
+    <!-- Seed electrons · state $T_e$ -->
+    <g style="fill: #263445" transform="translate(437.73 152.723313)">
+     <text>
+      <tspan style="font: 700 11px 'DejaVu Sans'" x="0 7.922363 15.382812 22.843262 30.717285 34.546875 42.007324 45.777832 53.238281 59.758789 65.01709 70.441895 77.999023 85.830078 92.377441 96.207031 100.385742 104.215332 110.762695 116.020996 123.443848 128.702148 136.162598" y="-0.640625">Seed electrons · state </tspan>
+      <tspan style="font: oblique 11px 'DejaVu Sans'" x="139.992188" y="-0.640625">T</tspan>
+      <tspan style="font: oblique 7.7px 'DejaVu Sans'" x="146.711426" y="1.1640625">e</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_4">
+    <!-- $C_e\dot T_e=P_{opt}+I^2R_{seed}-P_{e-ph}-P_{diff}$ -->
+    <g style="fill: #263445" transform="translate(436.58 194.574956)">
+     <text>
+      <tspan style="font: oblique 9.2px 'DejaVu Sans'" x="0 10.688477 32.202832 59.992065 67.717419 101.196216 138.520898" y="-0.49062499999999964">CTPIRPP</tspan>
+      <tspan style="font: oblique 6.44px 'DejaVu Sans'" x="6.45874 16.618359 37.780835 41.742346 45.852454 74.144543 77.517993 81.501636 85.485278 106.774219 118.706177 122.816284 144.098901 148.209009 150.007971 152.2875" y="0.9859375000000004">eeoptseedephdiff</tspan>
+      <tspan style="font: 9.2px 'DejaVu Sans'" x="16.883789 22.65022 50.439453 91.643604 128.968286" y="-3.15625 -0.49062499999999964 -0.49062499999999964 -0.49062499999999964 -0.49062499999999964">̇=+−−</tspan>
+      <tspan style="font: 6.44px 'DejaVu Sans'" x="63.351733 112.019348" y="-3.9359374999999996 0.9859375000000004">2−</tspan>
+     </text>
+    </g>
+    <text style="fill: #263445; font: 9.2px 'DejaVu Sans'" transform="translate(469.38375 208.611856)">B_TERATE4 / C_TE4</text>
+   </g>
+   <g id="text_5">
+    <!-- Seed phonons · state $T_{ph}$ -->
+    <g style="fill: #263445" transform="translate(817.78 152.163)">
+     <text>
+      <tspan style="font: 700 11px 'DejaVu Sans'" x="0 7.922363 15.382812 22.843262 30.717285 34.546875 42.420898 50.251953 57.809082 65.640137 73.197266 81.02832 87.575684 91.405273 95.583984 99.413574 105.960938 111.219238 118.64209 123.900391 131.36084" y="-0.640625">Seed phonons · state </tspan>
+      <tspan style="font: oblique 11px 'DejaVu Sans'" x="135.19043" y="-0.640625">T</tspan>
+      <tspan style="font: oblique 7.7px 'DejaVu Sans'" x="141.909668 146.797363" y="1.1640625">ph</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_6">
+    <!-- $C_{ph}\dot T_{ph}=P_{e-ph}-P_{sub}$ -->
+    <g style="fill: #263445" transform="translate(846.318 194.574956)">
+     <text>
+      <tspan style="font: oblique 9.2px 'DejaVu Sans'" x="0 14.918726 40.66333 77.988013" y="-0.49062499999999964">CTPP</tspan>
+      <tspan style="font: oblique 6.44px 'DejaVu Sans'" x="6.45874 10.568848 20.848608 24.958716 46.241333 58.173291 62.283398 83.566016 86.939465 91.04325" y="0.9859375000000004">phphephsub</tspan>
+      <tspan style="font: 9.2px 'DejaVu Sans'" x="21.114038 31.110718 68.4354" y="-3.15625 -0.49062499999999964 -0.49062499999999964">̇=−</tspan>
+      <tspan style="font: 6.44px 'DejaVu Sans'" x="51.486462" y="0.9859375000000004">−</tspan>
+     </text>
+    </g>
+    <text style="fill: #263445; font: 9.2px 'DejaVu Sans'" transform="translate(842.891 208.611856)">B_TPHRATE4 / C_TPH4</text>
+   </g>
+   <g id="patch_9">
+    <path d="M 292.87855 190.08
+Q 322.063857 190.08 349.907523 190.08
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 345.907523 188.08
+L 349.907523 190.08
+L 345.907523 192.08
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 676.011813 190.08
+Q 714.106125 190.08 750.858796 190.08
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 746.858796 188.08
+L 750.858796 190.08
+L 746.858796 192.08
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_7">
+    <g id="patch_11">
+     <path d="M 700.998 178.824
+L 726.618 178.824
+L 726.618 168.072
+L 700.998 168.072
+z
+" style="fill: #ffffff"/>
+    </g>
+    <!-- $P_{e-ph}$ -->
+    <g style="fill: #176b91" transform="translate(702.006 175.212)">
+     <text>
+      <tspan style="font: oblique 8.4px 'DejaVu Sans'" x="0" y="-0.171875">P</tspan>
+      <tspan style="font: oblique 5.88px 'DejaVu Sans'" x="5.050354 15.853613 19.574927" y="1.140625">eph</tspan>
+      <tspan style="font: 5.88px 'DejaVu Sans'" x="9.799323" y="1.140625">−</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_12">
+    <path d="M 1046.229002 299.97
+Q 999.225083 299.97 953.562805 299.97
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 957.562805 301.97
+L 953.562805 299.97
+L 957.562805 297.97
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_8">
+    <g id="patch_13">
+     <path d="M 1012.554 278.312813
+L 1030.446 278.312813
+L 1030.446 268.167188
+L 1012.554 268.167188
+z
+" style="fill: #ffffff"/>
+    </g>
+    <!-- $P_{sub}$ -->
+    <g style="fill: #176b91" transform="translate(1013.562 275.557875)">
+     <text>
+      <tspan style="font: oblique 8.4px 'DejaVu Sans'" x="0" y="-0.171875">P</tspan>
+      <tspan style="font: oblique 5.88px 'DejaVu Sans'" x="5.050354 8.104694 11.820282" y="1.140625">sub</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_9">
+    <!-- Bath $T_b$ -->
+    <g style="fill: #63758a" transform="translate(867.335 303.005313)">
+     <text>
+      <tspan style="font: 11px 'DejaVu Sans'" x="0 7.546387 14.287109 18.600098 25.571777" y="-0.640625">Bath </tspan>
+      <tspan style="font: oblique 11px 'DejaVu Sans'" x="29.068359" y="-0.640625">T</tspan>
+      <tspan style="font: oblique 7.7px 'DejaVu Sans'" x="35.787598" y="1.1640625">b</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_14">
+    <path d="M 655.222357 299.97
+Q 736.382024 299.97 816.20005 299.97
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 812.20005 297.97
+L 816.20005 299.97
+L 812.20005 301.97
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_10">
+    <g id="patch_15">
+     <path d="M 721.998 305.042813
+L 738.882 305.042813
+L 738.882 294.897188
+L 721.998 294.897188
+z
+" style="fill: #ffffff"/>
+    </g>
+    <!-- $P_{diff}$ -->
+    <g style="fill: #176b91" transform="translate(723.006 302.287875)">
+     <text>
+      <tspan style="font: oblique 8.4px 'DejaVu Sans'" x="0" y="-0.171875">P</tspan>
+      <tspan style="font: oblique 5.88px 'DejaVu Sans'" x="5.050354 8.771667 10.400458 12.464355" y="1.140625">diff</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_11">
+    <!-- Electrical state · $I$ -->
+    <g style="fill: #263445" transform="translate(162.455 345.773313)">
+     <text>
+      <tspan style="font: 700 11px 'DejaVu Sans'" x="0 7.51416 11.284668 18.745117 25.265625 30.523926 35.94873 39.719238 46.239746 53.662598 57.433105 61.262695 67.810059 73.068359 80.491211 85.749512 93.209961 97.039551 101.218262" y="-0.640625">Electrical state · </tspan>
+      <tspan style="font: oblique 11px 'DejaVu Sans'" x="105.047852" y="-0.640625">I</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_12">
+    <!-- $L_k\dot I=V_d-V_s$ -->
+    <g style="fill: #263445" transform="translate(189.122 391.811537)">
+     <text>
+      <tspan style="font: oblique 9.2px 'DejaVu Sans'" x="0 9.149219 23.231982 45.270679" y="-0.49062499999999964">LIVV</tspan>
+      <tspan style="font: oblique 6.44px 'DejaVu Sans'" x="5.153442 29.559741 51.598438" y="0.9859375000000004">kds</tspan>
+      <tspan style="font: 9.2px 'DejaVu Sans'" x="12.438281 13.67937 35.718066" y="-3.15625 -0.49062499999999964 -0.49062499999999964">̇=−</tspan>
+     </text>
+    </g>
+    <!-- $-I(R_s+R_{wire})$ -->
+    <g style="fill: #263445" transform="translate(187.006 404.90975)">
+     <text>
+      <tspan style="font: 9.2px 'DejaVu Sans'" x="0 10.478516 25.936072 55.902307" y="-0.171875">−(+)</tspan>
+      <tspan style="font: oblique 9.2px 'DejaVu Sans'" x="7.750488 14.08728 35.488684" y="-0.171875">IRR</tspan>
+      <tspan style="font: oblique 6.44px 'DejaVu Sans'" x="20.514404 41.915808 47.211523 49.010486 51.672571" y="1.3046875">swire</tspan>
+     </text>
+    </g>
+    <text style="fill: #263445; font: 9.2px 'DejaVu Sans'" transform="translate(173.936969 418.007962)">L_NBN4 / B_WIRE4</text>
+   </g>
+   <g id="text_13">
+    <text style="fill: #263445; font: 700 11px 'DejaVu Sans'; text-anchor: middle" x="513.63" y="345.773313" transform="rotate(-0 513.63 345.773313)">Seed resistance</text>
+   </g>
+   <g id="text_14">
+    <!-- $R_{seed}=R_{seed,full}f_n(T_e,T_c(I))$ -->
+    <g style="fill: #263445" transform="translate(455.026 381.446356)">
+     <text>
+      <tspan style="font: oblique 9.2px 'DejaVu Sans'" x="0 33.478796 68.903796 80.118909 94.741345 107.806458" y="-0.15625">RRfTTI</tspan>
+      <tspan style="font: oblique 6.44px 'DejaVu Sans'" x="6.427124 9.800574 13.784216 17.767859 39.90592 43.27937 47.263013 51.246655 58.676465 60.955994 65.059778 66.85874 72.160266 85.769177 100.391614" y="1.3203125">seedseedfullnec</tspan>
+      <tspan style="font: 9.2px 'DejaVu Sans'" x="23.926184 76.510144 89.998914 104.197693 110.534485 114.14325" y="-0.15625">=(,())</tspan>
+      <tspan style="font: 6.44px 'DejaVu Sans'" x="55.356763" y="1.3203125">,</tspan>
+     </text>
+    </g>
+    <text style="fill: #263445; font: 9.2px 'DejaVu Sans'" transform="translate(470.832031 394.931256)">B_FN4 / B_RSEED4</text>
+    <!-- $T_c(I)$ from switching-current surface -->
+    <g style="fill: #263445" transform="translate(431.52 408.287644)">
+     <text>
+      <tspan style="font: oblique 9.2px 'DejaVu Sans'" x="0 13.065112" y="-0.15625">TI</tspan>
+      <tspan style="font: oblique 6.44px 'DejaVu Sans'" x="5.650269" y="1.3203125">c</tspan>
+      <tspan style="font: 9.2px 'DejaVu Sans'" x="9.456348 15.79314 19.401904 22.342212 25.598682 29.40166 35.060962 44.071582 47.01189 51.831104 59.396411 61.966357 65.593188 70.678882 76.541431 79.111377 84.973926 90.845508 94.183276 99.26897 105.131519 108.934497 112.737476 118.428394 124.290942 127.917773 130.858081 135.677295 141.539844 145.342822 148.599292 154.267627 159.35332" y="-0.15625">() from switching-current surface</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_15">
+    <!-- Domain · state $R_d$ -->
+    <g style="fill: #263445" transform="translate(839.945 345.773313)">
+     <text>
+      <tspan style="font: 700 11px 'DejaVu Sans'" x="0 9.130859 16.687988 28.149902 35.572754 39.343262 47.174316 51.003906 55.182617 59.012207 65.55957 70.817871 78.240723 83.499023 90.959473" y="-0.640625">Domain · state </tspan>
+      <tspan style="font: oblique 11px 'DejaVu Sans'" x="94.789062" y="-0.640625">R</tspan>
+      <tspan style="font: oblique 7.7px 'DejaVu Sans'" x="102.432129" y="1.1640625">d</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_16">
+    <text style="fill: #263445; font: 9.2px 'DejaVu Sans'" transform="translate(818.543344 391.296938)">Formation + growth − retraction</text>
+    <!-- Finite-size penalty uses $R_c(I_b,T_b)$ -->
+    <g style="fill: #263445" transform="translate(818.672 404.39745)">
+     <text>
+      <tspan style="font: 9.2px 'DejaVu Sans'" x="0 5.320557 7.890503 13.753052 16.322998 19.949829 25.640747 28.978516 33.797729 36.367676 41.223022 46.91394 49.854248 55.72583 61.416748 67.279297 72.947632 75.517578 79.144409 84.61853 87.558838 93.421387 98.240601 103.931519 108.750732 121.924243 132.617236 147.366138" y="-0.15625">Finite-size penalty uses (,)</tspan>
+      <tspan style="font: oblique 9.2px 'DejaVu Sans'" x="111.69104 125.533008 137.359668" y="-0.15625">RIT</tspan>
+      <tspan style="font: oblique 6.44px 'DejaVu Sans'" x="118.118164 128.261035 143.009937" y="1.3203125">cbb</tspan>
+     </text>
+    </g>
+    <text style="fill: #263445; font: 9.2px 'DejaVu Sans'" transform="translate(835.603594 417.51435)">B_DRDOM4 / B_DOMAIN4</text>
+    <text style="fill: #263445; font: 9.2px 'DejaVu Sans'" transform="translate(866.274094 430.868438)">C_DOMAIN4</text>
+   </g>
+   <g id="patch_16">
+    <path d="M 510.66 251.47855
+Q 510.66 286.605438 510.66 320.390684
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 512.66 316.390684
+L 510.66 320.390684
+L 508.66 316.390684
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_17">
+    <g id="patch_17">
+     <path d="M 522.978 290.192813
+L 533.982 290.192813
+L 533.982 280.047188
+L 522.978 280.047188
+z
+" style="fill: #ffffff"/>
+    </g>
+    <!-- $T_e$ -->
+    <g style="fill: #176b91" transform="translate(523.986 287.437875)">
+     <text>
+      <tspan style="font: oblique 8.4px 'DejaVu Sans'" x="0" y="-0.171875">T</tspan>
+      <tspan style="font: oblique 5.88px 'DejaVu Sans'" x="5.115784" y="1.140625">e</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_18">
+    <path d="M 316.643082 395.01
+Q 333.947805 395.01 349.910887 395.01
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 345.910887 393.01
+L 349.910887 395.01
+L 345.910887 397.01
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_18">
+    <g id="patch_19">
+     <path d="M 330.786 385.232812
+L 335.322 385.232812
+L 335.322 375.087187
+L 330.786 375.087187
+z
+" style="fill: #ffffff"/>
+    </g>
+    <!-- $I$ -->
+    <g style="fill: #176b91" transform="translate(331.794 382.477875)">
+     <text>
+      <tspan style="font: oblique 8.4px 'DejaVu Sans'" x="0" y="-0.171875">I</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_20">
+    <path d="M 385.92 321.73145
+Q 385.92 286.604562 385.92 252.819316
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 383.92 256.819316
+L 385.92 252.819316
+L 387.92 256.819316
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_19">
+    <g id="patch_21">
+     <path d="M 347.544 290.706
+L 376.776 290.706
+L 376.776 279.534
+L 347.544 279.534
+z
+" style="fill: #ffffff"/>
+    </g>
+    <!-- $I^2R_{seed}$ -->
+    <g style="fill: #176b91" transform="translate(348.552 287.951062)">
+     <text>
+      <tspan style="font: oblique 8.4px 'DejaVu Sans'" x="0 6.979351" y="-0.78125">IR</tspan>
+      <tspan style="font: 5.88px 'DejaVu Sans'" x="3.0307" y="-3.84375">2</tspan>
+      <tspan style="font: oblique 5.88px 'DejaVu Sans'" x="12.798504 15.852843 19.459655 23.066466" y="0.53125">seed</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_22">
+    <path d="M 676.011813 395.01
+Q 714.106125 395.01 750.858796 395.01
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 746.858796 393.01
+L 750.858796 395.01
+L 746.858796 397.01
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_20">
+    <g id="patch_23">
+     <path d="M 690.333937 385.232812
+L 737.282062 385.232812
+L 737.282062 375.087187
+L 690.333937 375.087187
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="fill: #176b91; font: 8.4px 'DejaVu Sans'; text-anchor: middle" x="713.808" y="382.477875" transform="rotate(-0 713.808 382.477875)">Seed drive</text>
+   </g>
+   <g id="patch_24">
+    <path d="M 813.6 284.152357
+Q 813.6 302.943524 813.6 320.393051
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 815.6 316.393051
+L 813.6 320.393051
+L 811.6 316.393051
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_21">
+    <g id="patch_25">
+     <path d="M 639.942 268.818
+L 773.418 268.818
+L 773.418 258.654
+L 639.942 258.654
+z
+" style="fill: #ffffff"/>
+    </g>
+    <!-- $T_e$ → edge-temperature closure -->
+    <g style="fill: #176b91" transform="translate(640.95 266.046)">
+     <text>
+      <tspan style="font: oblique 8.4px 'DejaVu Sans'" x="0" y="-0.921875">T</tspan>
+      <tspan style="font: oblique 5.88px 'DejaVu Sans'" x="5.115784" y="0.390625">e</tspan>
+      <tspan style="font: 8.4px 'DejaVu Sans'" x="8.941345 11.603516 18.62085 21.28302 26.435608 31.75177 37.067932 42.22052 45.242554 48.526306 53.678894 61.837158 67.15332 72.305908 75.749146 80.881287 84.165039 89.473022 92.91626 98.068848 100.731018 105.335632 107.662476 112.786438 117.14978 122.457764 125.901001" y="-0.921875"> → edge-temperature closure</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_26">
+    <path d="M 902.7 502.899818
+Q 902.7 491.535634 902.7 481.51309
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 900.7 485.51309
+L 902.7 481.51309
+L 904.7 485.51309
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_22">
+    <g id="patch_27">
+     <path d="M 650.718 509.972812
+L 750.762 509.972812
+L 750.762 499.827187
+L 650.718 499.827187
+z
+" style="fill: #ffffff"/>
+    </g>
+    <!-- $I^2$ → domain-front drive -->
+    <g style="fill: #176b91" transform="translate(651.726 507.217875)">
+     <text>
+      <tspan style="font: oblique 8.4px 'DejaVu Sans'" x="0" y="-0.78125">I</tspan>
+      <tspan style="font: 5.88px 'DejaVu Sans'" x="3.0307" y="-3.84375">2</tspan>
+      <tspan style="font: 8.4px 'DejaVu Sans'" x="6.979351 9.641521 16.658855 19.321026 24.637188 29.76115 37.919414 43.051556 45.378399 50.686382 53.708416 56.656841 60.100079 65.224041 70.532024 73.815777 76.477947 81.794109 85.237347 87.56419 92.520489" y="-0.78125"> → domain-front drive</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_23">
+    <text style="fill: #263445; font: 700 11px 'DejaVu Sans'; text-anchor: middle" x="513.63" y="574.463313" transform="rotate(-0 513.63 574.463313)">Total wire resistance</text>
+   </g>
+   <g id="text_24">
+    <!-- $R_{wire}=\min[R_n,\max(R_{seed}+R_d,0)]$ -->
+    <g style="fill: #263445" transform="translate(436.902 605.008581)">
+     <text>
+      <tspan style="font: oblique 9.2px 'DejaVu Sans'" x="0 52.820239 92.101514 125.58031" y="-0.15625">RRRR</tspan>
+      <tspan style="font: oblique 6.44px 'DejaVu Sans'" x="6.427124 11.722839 13.521802 16.183887 59.247363 98.528638 101.902087 105.88573 109.869373 132.007434" y="1.3203125">wirenseedd</tspan>
+      <tspan style="font: 9.2px 'DejaVu Sans'" x="22.215747 31.768359 40.778979 43.348926 49.211475 63.597241 68.339673 77.350293 83.018628 88.492749 116.027698 136.363635 141.106067 146.991199 150.599963" y="-0.15625">=min[,max(+,0)]</tspan>
+     </text>
+    </g>
+    <text style="fill: #263445; font: 9.2px 'DejaVu Sans'" transform="translate(463.057312 618.106794)">B_RWIRE4 → B_WIRE4</text>
+   </g>
+   <g id="patch_28">
+    <path d="M 510.66 447.500182
+Q 510.66 498.959498 510.66 549.077172
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 512.66 545.077172
+L 510.66 549.077172
+L 508.66 545.077172
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_25">
+    <g id="patch_29">
+     <path d="M 528.084 539.672813
+L 550.26 539.672813
+L 550.26 529.527188
+L 528.084 529.527188
+z
+" style="fill: #ffffff"/>
+    </g>
+    <!-- $R_{seed}$ -->
+    <g style="fill: #176b91" transform="translate(529.092 536.917875)">
+     <text>
+      <tspan style="font: oblique 8.4px 'DejaVu Sans'" x="0" y="-0.171875">R</tspan>
+      <tspan style="font: oblique 5.88px 'DejaVu Sans'" x="5.819153 8.873492 12.480304 16.087115" y="1.140625">seed</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_30">
+    <path d="M 989.797326 601.128
+Q 832.903508 601.128 677.351332 601.128
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 681.351332 603.128
+L 677.351332 601.128
+L 681.351332 599.128
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_26">
+    <g id="patch_31">
+     <path d="M 807.678 606.200812
+L 819.522 606.200812
+L 819.522 596.055187
+L 807.678 596.055187
+z
+" style="fill: #ffffff"/>
+    </g>
+    <!-- $R_d$ -->
+    <g style="fill: #176b91" transform="translate(808.686 603.445875)">
+     <text>
+      <tspan style="font: oblique 8.4px 'DejaVu Sans'" x="0" y="-0.171875">R</tspan>
+      <tspan style="font: oblique 5.88px 'DejaVu Sans'" x="5.819153" y="1.140625">d</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_32">
+    <path d="M 160.2 599.130356
+Q 160.2 532.2261 160.2 466.663484
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 158.2 470.663484
+L 160.2 466.663484
+L 162.2 470.663484
+" style="fill: none; stroke: #176b91; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_27">
+    <g id="patch_33">
+     <path d="M 244.95 606.200812
+L 265.53 606.200812
+L 265.53 596.055187
+L 244.95 596.055187
+z
+" style="fill: #ffffff"/>
+    </g>
+    <!-- $R_{wire}$ -->
+    <g style="fill: #176b91" transform="translate(245.958 603.445875)">
+     <text>
+      <tspan style="font: oblique 8.4px 'DejaVu Sans'" x="0" y="-0.171875">R</tspan>
+      <tspan style="font: oblique 5.88px 'DejaVu Sans'" x="5.819153 10.613922 12.242712 14.652979" y="1.140625">wire</tspan>
+     </text>
+    </g>
+   </g>
+  </g>
+  <g id="text_28">
+   <text style="fill: #263445; font: 700 21px 'DejaVu Sans'; text-anchor: start" x="46.08" y="35.64" transform="rotate(-0 46.08 35.64)">SNSPD · Electrothermal model structure</text>
+  </g>
+  <g id="text_29">
+   <text style="fill: #63758a; font: 11px 'DejaVu Sans'; text-anchor: start" x="46.08" y="64.944" transform="rotate(-0 46.08 64.944)">One continuous model for both regimes · Arrows denote model dependencies or heat flow, not electrical wires</text>
+  </g>
+  <g id="text_30">
+   <text style="fill: #63758a; font: 10px 'DejaVu Sans'; text-anchor: start" x="46.08" y="704.088" transform="rotate(-0 46.08 704.088)">Four dynamic states: wire current I, seed electron temperature Te, seed phonon temperature Tph, and normal-domain resistance Rd.</text>
+  </g>
+  <g id="text_31">
+   <text style="fill: #63758a; font: 10px 'DejaVu Sans'; text-anchor: start" x="46.08" y="730.224" transform="rotate(-0 46.08 730.224)">Default closure: domainEnergyClosure = 0; domainSuperheatClosure = 0. The domain has no independent temperature or energy state.</text>
+  </g>
+  <g id="text_32">
+   <text style="fill: #63758a; font: 10px 'DejaVu Sans'; text-anchor: start" x="46.08" y="756.36" transform="rotate(-0 46.08 756.36)">Domain Joule power I²Rd is a diagnostic; the seed electron equation includes I²Rseed. No Geiger/calorimetric mode switch is present.</text>
+  </g>
+  <g id="text_33">
+   <text style="fill: #63758a; font: 9px 'DejaVu Sans'; text-anchor: start" x="46.08" y="780.912" transform="rotate(-0 46.08 780.912)">Smooth bounds, heat-capacity laws, and the critical-nucleus calculation are defined in the model library and detailed in docs/snspd.md.</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pffbc69501d">
+   <rect x="100.8" y="118.8" width="950.4" height="546.48"/>
+  </clipPath>
+ </defs>
+</svg>

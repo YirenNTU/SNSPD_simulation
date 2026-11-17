@@ -28,8 +28,18 @@ See [validation](docs/validation.md) for measured quantities, convergence, and l
 
 The [circuit documentation](docs/circuit.md) includes the connections within all
 four amplifier stages. Component names, values, and node labels match the netlists.
-The [two-page PDF](docs/figures/circuit_schematics.pdf) contains both schematics;
-SVG and PNG versions and the rendering script are included.
+The overview uses the SNSPD symbol geometry from the installed LTspice library.
+The [four-page PDF](docs/figures/circuit_schematics.pdf) includes the external
+circuits and detector implementation. SVG and PNG versions are included.
+
+## SNSPD internal model
+
+The [SNSPD section](docs/snspd.md) separately shows the detector current path,
+optical-control branch, numerical state integrators, and electrothermal feedback.
+It maps the library symbol's four pins to the current subcircuit and distinguishes
+the model's auxiliary state circuits from physical detector components.
+
+![SNSPD electrothermal structure](docs/figures/snspd_electrothermal_structure.png)
 
 ## Quick start
 
@@ -83,11 +93,13 @@ python3 -m unittest discover -s tests -v
 | `provenance/` | Source hashes, circuit-value checks, and packaging verification |
 | `docs/` | Model equations, parameter definitions, circuit topology, and validation scope |
 | `docs/figures/`, `scripts/draw_circuit.py` | Circuit schematics and their reproducible renderer |
+| `symbols/` | Original SNSPD symbol geometry, pin metadata, and upstream license |
 
 ## Documentation
 
 - [Model and parameter definitions](docs/model.md)
 - [External circuit](docs/circuit.md)
+- [SNSPD structure and implementation](docs/snspd.md)
 - [Validation and known limitations](docs/validation.md)
 - [Reproducibility and publication](docs/reproducibility.md)
 - [Dependency and attribution notes](NOTICE.md)

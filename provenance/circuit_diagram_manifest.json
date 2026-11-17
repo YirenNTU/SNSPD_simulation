@@ -1,4 +1,5 @@
 {
+  "figure_count": 4,
   "external_components_checked": 37,
   "components": {
     "R1": {
@@ -322,15 +323,69 @@
       "0"
     ]
   },
-  "omitted_detector_details": [
-    "thermal-state auxiliaries",
-    "ideal current sensors",
-    "10 microohm numerical series resistance"
+  "internal_elements_checked": {
+    "L_NBN4": "L_NBN4 drain NLSER4 {Lind} Rser=0 IC={Iinit4}",
+    "R_LSER4": "R_LSER4 NLSER4 NISENSE4 1e-5",
+    "V_SN_SENSE4": "V_SN_SENSE4 NISENSE4 NET4 0",
+    "B_WIRE4": "B_WIRE4 NET4 source V=v(NRwire4)*i(V_SN_SENSE4)",
+    "V_GATE_SENSE4": "V_GATE_SENSE4 gate NGATESENSE4 0",
+    "R_GATE4": "R_GATE4 NGATESENSE4 gatereturn 1e-5",
+    "B_TERATE4": "B_TERATE4 0 NdTe4 I=(v(NPph4)+v(NPjSeed4)-v(NPeph4)-v(NPdiff4))/ max(v(NCe4),tiny4)",
+    "C_TE4": "C_TE4 NdTe4 0 1 IC=0",
+    "R_TESTATEREF4": "R_TESTATEREF4 NdTe4 0 1G",
+    "B_TPHRATE4": "B_TPHRATE4 0 NdTph4 I=(v(NPeph4)-v(NPcool4))/max(v(NCp4),tiny4)",
+    "C_TPH4": "C_TPH4 NdTph4 0 1 IC=0",
+    "R_TPHSTATEREF4": "R_TPHSTATEREF4 NdTph4 0 1G",
+    "B_DOMAIN4": "B_DOMAIN4 0 NRdom4 I=v(NdRdom4)",
+    "C_DOMAIN4": "C_DOMAIN4 NRdom4 0 1 IC={RinitDomain}",
+    "D_RDOMLOW4": "D_RDOMLOW4 0 NRdom4 DSTATE4",
+    "B_PPH4": "B_PPH4 NPph4 0 V=etaAbs*max(Nphoton,0)*Ephoton4*v(NIgate4)/ max(IgateRef*tPhotonNorm,tiny4)",
+    "B_PJSEED4": "B_PJSEED4 NPjSeed4 0 V=i(V_SN_SENSE4)*i(V_SN_SENSE4)*v(NRseed4)",
+    "B_PEPH4": "B_PEPH4 NPeph4 0 V=SigmaEph4*Vseed4*(v(NTeUse4)**ephExponent- v(NTphUse4)**ephExponent)",
+    "B_PCOOL4": "B_PCOOL4 NPcool4 0 V=betaTBC*Aseed4*(v(NTphUse4)**4-Tsub**4)",
+    "B_PDIFF4": "B_PDIFF4 NPdiff4 0 V=etaDiff*Lorenz/max(RdiffPath4,tiny4)* max(v(NTeUse4)**2-Tsub**2,0)*v(NksDiff4)",
+    "B_FN4": "B_FN4 Nfn4 0 V=min(max((v(NfnRaw4)-v(NfnBath4))/ max(1-v(NfnBath4),1e-12),0),1)",
+    "B_RSEED4": "B_RSEED4 NRseed4 0 V=RseedFull4*v(Nfn4)",
+    "B_DRDOM4": "B_DRDOM4 NdRdom4 0 V=dRFront4*(1-v(Nrexist4))*v(Nnuc4)*Fnucleation* v(NFplus4)+v(Nrexist4)*((1-domainEnergyClosure)*dRFront4* (v(NFplus4)*v(Nrroom4)-v(NFminus4))+domainEnergyClosure* v(NdRdomEnergy4)-dRFront4*v(NFpenalty4))",
+    "B_RWIRE4": "B_RWIRE4 NRwire4 0 V=min(Rnorm4,max(v(NRseed4)+v(NRdom4),0))",
+    "B_PJDOMAIN4": "B_PJDOMAIN4 NPjDomain4 0 V=i(V_SN_SENSE4)*i(V_SN_SENSE4)*max(v(NRdom4),0)"
+  },
+  "symbol_ports": [
+    {
+      "x": -64,
+      "y": -48,
+      "original_name": "gate-in",
+      "order": 1,
+      "model_port": "gate"
+    },
+    {
+      "x": -64,
+      "y": 48,
+      "original_name": "photon-out",
+      "order": 2,
+      "model_port": "gatereturn"
+    },
+    {
+      "x": 0,
+      "y": -48,
+      "original_name": "source",
+      "order": 3,
+      "model_port": "drain"
+    },
+    {
+      "x": 0,
+      "y": 48,
+      "original_name": "drain",
+      "order": 4,
+      "model_port": "source"
+    }
   ],
+  "internal_representation": "Electrical port and state circuits are explicit; algebraic B sources are grouped in a dependency diagram.",
   "source_sha256": {
     "circuits/bias_tee_and_load.inc": "93d3a782d209537d6f816436b18c993978b2e347d4ff5b427721a96bf9da045a",
     "circuits/amplifier_chain.inc": "acc42183616909527093f892e93178c698a1a5bc709840025d5a85f51e1ebfb9",
     "snspdtool/core.py": "7a5030a3892089b57a0e0c93782597518ce1405042ca4c981d4f74da8e9427c7",
-    "models/snspd_nbn_v5c.lib": "c6131f33f00045e471c8531835ce7e09e7247d99ba87e5c277bd8e53200fb0e1"
+    "models/snspd_nbn_v5c.lib": "c6131f33f00045e471c8531835ce7e09e7247d99ba87e5c277bd8e53200fb0e1",
+    "symbols/snspd_geometry.json": "31242da5c2d35c48aeaa4bd126bac9ac923cb88ea40a38b001a1e17effe3b69f"
   }
 }

@@ -5,6 +5,13 @@ with the documented electron–phonon reference correction and current-sensing
 revision. Existing source comments and scientific attribution are retained.
 The runner, analysis utilities, and package documentation accompany that snapshot.
 
+The circuit figure's SNSPD geometry is derived from `snspdWithPhotonPort.asy`
+in the installed `snspd-spice` library. Its LINE coordinates match that library's
+upstream copy. The geometry and original pin metadata are retained in
+`symbols/snspd_geometry.json`; current-model labels follow subcircuit pin order.
+The upstream MIT license is reproduced in `symbols/LICENSE.snspd-spice` and
+applies to the reused symbol geometry.
+
 LTspice is an external dependency. Its standard `opamp.sub` is loaded from the
 user's installation and is not redistributed in this repository. Its hash is
 recorded for each simulation. Python dependencies retain their respective licenses.
