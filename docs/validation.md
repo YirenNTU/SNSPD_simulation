@@ -76,6 +76,37 @@ not the precision of the first pulse.
 
 ## Remaining limits
 
+### Physical consistency and validation scope
+
+The model is a physically motivated, semi-empirical approximation. Its electrical
+equation couples kinetic inductance and a nonnegative wire resistance to the
+readout circuit. In the stated seed heat balances, electron–phonon heat flow
+appears with opposite signs, so that exchange cancels when the two balances are
+added. Optical input, seed Joule heating, substrate cooling, and diffusion have
+explicit roles. These structural properties support the model's interpretation;
+they do not establish the accuracy of its parameters or domain dynamics.
+
+The developed domain is represented by a resistance and a boundary-evolution
+law, without its own temperature or stored thermal-energy state. Domain Joule
+heating enters the boundary-driving approximation, but its diagnostic power is
+not integrated in a separate domain energy balance. Global thermal-energy
+closure has therefore not been demonstrated. The finite-size penalty and
+prepared-bias critical scale also require independent validation.
+
+Shared equations do not establish a calibrated continuous transition between
+regimes. The switching current is supplied separately at each bath temperature,
+and some stored cases use different readout gain calibrations. Fixed kinetic
+inductance and uncalibrated deposited optical energy further limit quantitative
+comparison with experiment. The low-energy non-monotonicity reported above
+remains unresolved.
+
+The current evidence supports studying mechanisms and comparing simulated
+responses within the tested conditions. It does not support treating all
+parameter values as measured device properties, claiming full thermal-energy
+conservation, or claiming quantitative validation of calorimetric performance.
+
+### Numerical and experimental limits
+
 The integral electrical-balance residual reaches approximately 0.43%, normalized
 by Lk × Ib. Step convergence does not establish exact internal balances or physical
 parameter validity. The developed-domain energy closure, fixed kinetic inductance,

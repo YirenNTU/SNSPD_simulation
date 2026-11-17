@@ -28,6 +28,21 @@ no Geiger/calorimetric selector. Its reference set contains 7 Geiger and
 25 calorimetric cases. The earlier model bodies and latest model equations are
 preserved in this release.
 
+## Contribution and scope
+
+This project develops a compact two-temperature SNSPD model in SPICE to
+investigate Geiger and calorimetric responses within a common electrothermal
+framework. It combines separate electron and phonon temperatures in a fixed
+seed, continuous normal-domain evolution, and the external readout circuit.
+
+The methodological contribution under investigation is this integration and its
+finite-size domain-survival approximation. Two-temperature physics and SNSPD
+electrothermal SPICE modeling have prior literature. In particular,
+[Nguyen et al. (2025)](https://arxiv.org/abs/2508.02791) use a single wire-temperature
+state; the present implementation evolves two seed temperatures. Publication
+priority has not been established, and no first-implementation claim is made.
+See the [comparison with prior work](docs/model_lineage.md#relation-to-later-work).
+
 ## Quick start
 
 Requirements: Python 3.12, LTspice, and its standard `opamp.sub`.
@@ -78,9 +93,8 @@ for earlier-model defaults and examples.
 ## Status
 
 The tested 30 pF Geiger cases show triggering, amplitude saturation, and recovery.
-Near-transition responses remain energy-dependent, with slower internal resistance
-recovery at higher bias. The tested amplifier-output fall time does not reproduce
-a substantial bias dependence, and low-energy peak amplitude is non-monotonic.
+Near-transition responses remain energy-dependent, and low-energy peak amplitude
+is non-monotonic.
 
 The experimental overlay is peak-aligned without amplitude rescaling. Experimental
 deposited energy is unavailable; it is a waveform comparison, not a matched-energy
