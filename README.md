@@ -1,9 +1,18 @@
 # SNSPD simulation
 
-Version 0.1.1 · 17 November 2026
+Version 0.1.2 · 17 November 2026
 
 NbN detector models with a shared bias-tee and amplifier circuit, numerical
 reference cases, experimental response data, and an editable presentation.
+
+The original SNSPD SPICE models are from **Berggren et al. (2018)**,
+[“A superconducting nanowire can be modeled by using SPICE,”
+*Superconductor Science and Technology* **31**, 055010](https://doi.org/10.1088/1361-6668/aab149),
+and the accompanying [MIT QNN `snspd-spice` code](https://github.com/qnngroup/snspd-spice).
+This package contains locally modified versions and a subsequent electrothermal
+extension. Please cite the original paper when using these models; the
+[attribution notes](NOTICE.md) identify the source and project modifications.
+[BibTeX](docs/references.bib) and [citation metadata](CITATION.cff) are included.
 
 ## Models
 
@@ -79,6 +88,7 @@ validation. Numerical regression checks establish reproducibility, not full
 physical validation.
 
 - [Model equations and parameters](docs/model.md)
+- [Original models and project extensions](docs/model_lineage.md)
 - [SNSPD structure and functions](docs/snspd.md)
 - [External circuit](docs/circuit.md) and [concept figures](docs/concepts.md)
 - [Implementation reference](docs/snspd_implementation.md)

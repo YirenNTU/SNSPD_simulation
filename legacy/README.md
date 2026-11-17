@@ -1,8 +1,15 @@
 # Earlier Geiger models
 
-`snspd_geiger.lib` contains the project's earlier `nanowireBCF` and
-`nanowireDynamic` subcircuits, extracted from `LTspice_model/snspd.lib`.
-Their subcircuit bodies, equations, and parameter defaults are unchanged.
+`snspd_geiger.lib` contains locally modified versions of `nanowireBCF` and
+`nanowireDynamic` from Berggren et al., **“A superconducting nanowire can be
+modeled by using SPICE,”** *Superconductor Science and Technology* **31**, 055010
+(2018), [doi:10.1088/1361-6668/aab149](https://doi.org/10.1088/1361-6668/aab149).
+The original source is [MIT QNN's `snspd-spice`](https://github.com/qnngroup/snspd-spice).
+See [full attribution](../NOTICE.md) and [BibTeX](../docs/references.bib).
+
+The bodies were extracted from the project's `LTspice_model/snspd.lib`.
+Their equations and defaults are unchanged from that local source, which already
+contains modifications to the upstream models.
 
 | Model | Representation | Intended use |
 |---|---|---|

@@ -1,4 +1,8 @@
-* Earlier Geiger models from LTspice_model/snspd.lib.
+* Original models: K. K. Berggren et al., Supercond. Sci. Technol. 31, 055010 (2018).
+* A superconducting nanowire can be modeled by using SPICE.
+* https://doi.org/10.1088/1361-6668/aab149
+* Upstream source: https://github.com/qnngroup/snspd-spice
+* This copy includes local modifications from LTspice_model/snspd.lib.
 * Subcircuit bodies are preserved without equation or parameter changes.
 * See README.md for operating conditions and attribution.
 

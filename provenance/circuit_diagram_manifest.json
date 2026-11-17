@@ -385,7 +385,7 @@
     "circuits/bias_tee_and_load.inc": "93d3a782d209537d6f816436b18c993978b2e347d4ff5b427721a96bf9da045a",
     "circuits/amplifier_chain.inc": "acc42183616909527093f892e93178c698a1a5bc709840025d5a85f51e1ebfb9",
     "snspdtool/core.py": "9345abb750f0fe4b6bf0f23da73192c6de4e7ae8c9d58a5019695628b62916fd",
-    "models/snspd_nbn_v5c.lib": "20c3cef9948c264ab6506d7da6254f89e540c315810b346322461593be6f95a2",
+    "models/snspd_nbn_v5c.lib": "5631945c94e473d035d14be4e6c4cc6aaea54c625acf8944653ea8e0210671b6",
     "symbols/snspd_geometry.json": "31242da5c2d35c48aeaa4bd126bac9ac923cb88ea40a38b001a1e17effe3b69f"
   }
 }

@@ -44,12 +44,13 @@ intermediate slide decks, local run outputs, and older experimental model varian
 are excluded. LTspice and its `opamp.sub` remain external dependencies.
 
 ```sh
-python3 scripts/package.py --output runs/SNSPD_simulation_v0.1.1.zip
-python3 scripts/package.py --verify runs/SNSPD_simulation_v0.1.1.zip
+python3 scripts/package.py --output runs/SNSPD_simulation_v0.1.2.zip
+python3 scripts/package.py --verify runs/SNSPD_simulation_v0.1.2.zip
 ```
 
 `MANIFEST.json` lists every packaged file, byte size, and SHA-256 digest.
-`provenance/release_verification.json` records the cleanup regression checks.
+`provenance/release_verification.json` records the v0.1.1 numerical checks and
+the v0.1.2 attribution update. Model equations are unchanged between these versions.
 
 ## Git publication
 
@@ -62,7 +63,7 @@ No remote repository is assumed. After selecting a destination:
 ```sh
 git remote add origin REMOTE_URL
 git push -u origin main
-git push origin v0.1.1
+git push origin v0.1.2
 ```
 
 The release ZIP contains source files without Git history. After extracting it,

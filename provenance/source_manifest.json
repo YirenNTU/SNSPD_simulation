@@ -1,8 +1,8 @@
 {
   "model_original_filename": "snspd_nbn_v5c_numerical_review.lib",
   "model_original_sha256": "6540fd5a4194a848ee32e18e52e93c9560e93200337eb0d48b382582d7c6f900",
-  "model_packaged_sha256": "20c3cef9948c264ab6506d7da6254f89e540c315810b346322461593be6f95a2",
-  "model_change": "Documentation header condensed; all active SPICE lines and parameter defaults are unchanged.",
+  "model_packaged_sha256": "5631945c94e473d035d14be4e6c4cc6aaea54c625acf8944653ea8e0210671b6",
+  "model_change": "Documentation header condensed and original-model citation added; all active SPICE lines and parameter defaults are unchanged.",
   "reference_date": "2026-11-17",
   "input_schematics": {
     "SNSPD_dynamic.asc": "6c415a339bea20c5439bba0164f2f8c9aae1701373540a44f7bc54200c9dfcdb",
@@ -42,5 +42,6 @@
     "calorimetric_c30_b90_n4_refined": "c4699c1718e2b383984eece5a8bc81dbdd6b1fd629ffaafc050cf91bbbef73ea",
     "calorimetric_c30_b96_n10_long": "fbb66cbacf154d5ad98fb0d3fa5e6128cec99601b931580e49b79ee861cb55d4"
   },
-  "model_active_lines_sha256": "35a452937f68e9de4fb379e83ad7ca9b854c743bb62c84d88805e221f60502b7"
+  "model_active_lines_sha256": "35a452937f68e9de4fb379e83ad7ca9b854c743bb62c84d88805e221f60502b7",
+  "original_framework_doi": "10.1088/1361-6668/aab149"
 }

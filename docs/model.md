@@ -1,5 +1,12 @@
 # Detector model
 
+The original SPICE modeling framework is due to Berggren et al.,
+[“A superconducting nanowire can be modeled by using SPICE,”
+*Superconductor Science and Technology* **31**, 055010 (2018)](https://doi.org/10.1088/1361-6668/aab149).
+This project's v5c model is a subsequent electrothermal extension; its current
+closures and parameter choices are documented below. The original implementations
+and their local modifications are described in [the legacy guide](../legacy/README.md).
+
 The subcircuit `nanowireElectrothermal_NbN_v5c` combines a fixed kinetic inductance,
 a two-temperature seed, and a continuous normal-domain boundary model. Its ports
 are `gate`, `gatereturn`, `drain`, and `source`. The gate is a numerical optical-power

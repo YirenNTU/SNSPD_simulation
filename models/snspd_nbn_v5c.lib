@@ -1,4 +1,7 @@
 * NbN electrothermal model: nanowireElectrothermal_NbN_v5c.
+* Original SPICE framework: K. K. Berggren et al., SST 31, 055010 (2018).
+* https://doi.org/10.1088/1361-6668/aab149
+* This is a project extension; source attribution and modifications are in NOTICE.md.
 * Shared equations for Geiger and near-transition operation.
 * States: detector current, seed electron and phonon temperatures, domain resistance.
 * Ideal 0 V sources sense currents used by behavioral sources.

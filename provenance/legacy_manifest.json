@@ -19,8 +19,10 @@
   "symbol_original_sha256": "a03aaec013adb6053f0c0534a33456ec69db18ca5f7d3d54b1b2814790eadff2",
   "symbol_change": "Only ModelFile changed to snspd_geiger.lib.",
   "packaged_sha256": {
-    "snspd_geiger.lib": "e73eb1f8e115869122666b8a8bb3aad1107f5ae504550db3655b7463e59e934e",
+    "snspd_geiger.lib": "dee542acffcfa19f5a7644ec97cdcfe16ced485ae37e416cf1287e544bd2f8f4",
     "snspd-bcf.asc": "864a96796b8298e14c76512f0315284b672c6e5b137be37192c7256e5d00c4e8",
     "snspdWithPhotonPort.asy": "4b5604506d20f1e98318c2966358528b82bef6013b76d924078a9213bdaa3266"
-  }
+  },
+  "original_model_doi": "10.1088/1361-6668/aab149",
+  "upstream_repository": "https://github.com/qnngroup/snspd-spice"
 }

@@ -1,10 +1,42 @@
 cff-version: 1.2.0
-message: "Please cite the software version and relevant model references when using this software."
+message: "Cite Berggren et al. (2018) for the original SNSPD models. Also identify this repository and commit when using its extensions or numerical results."
 title: "SNSPD electrothermal simulation"
 type: software
-version: 0.1.1
+version: 0.1.2
+repository-code: "https://github.com/YirenNTU/SNSPD_simulation"
 date-released: 2026-11-17
 authors:
   - family-names: Wu
     given-names: Yiren
 abstract: "A reproducible research package for Geiger and near-transition energy-dependent SNSPD responses with an explicit external readout circuit."
+preferred-citation:
+  type: article
+  title: "A superconducting nanowire can be modeled by using SPICE"
+  authors:
+    - family-names: Berggren
+      given-names: Karl K.
+    - family-names: Zhao
+      given-names: Qing-Yuan
+    - family-names: Abebe
+      given-names: Nathnael
+    - family-names: Chen
+      given-names: Minjie
+    - family-names: Ravindran
+      given-names: Prasana
+    - family-names: McCaughan
+      given-names: Adam
+    - family-names: Bardin
+      given-names: Joseph C.
+  journal: Superconductor Science and Technology
+  volume: "31"
+  issue: "5"
+  start: "055010"
+  year: 2018
+  doi: "10.1088/1361-6668/aab149"
+  url: "https://doi.org/10.1088/1361-6668/aab149"
+references:
+  - type: software
+    title: snspd-spice
+    authors:
+      - name: Quantum Nanostructures and Nanofabrication Group
+    repository-code: "https://github.com/qnngroup/snspd-spice"
