@@ -1,5 +1,8 @@
 # External circuit
 
+For presentation figures without simulation identifiers, see
+[circuit and model concepts](concepts.md).
+
 The package retains the complete external circuit. The schematics below show the
 connections and values in the simulation netlists for both operating regimes.
 Download the [four-page vector PDF](figures/circuit_schematics.pdf),
@@ -13,7 +16,7 @@ node `0`. The detector uses the original meander and photon-arrow geometry from
 the installed `snspdWithPhotonPort.asy` symbol. Its current-model ports are mapped
 by `SpiceOrder`. The optical-control source drives `gate` at `N020`; its return
 is grounded. This control current represents optical input to the model.
-The separate [SNSPD section](snspd.md) shows the internal electrical path,
+The separate [SNSPD implementation reference](snspd_implementation.md) shows the internal electrical path,
 state integrators, and electrothermal feedback.
 
 The coupling capacitor has a 1 Ω series resistance. The bias inductor includes

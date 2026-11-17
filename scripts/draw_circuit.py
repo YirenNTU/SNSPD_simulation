@@ -476,7 +476,7 @@ def snspd_feedback():
     fig.text(.04,.111,"Four dynamic states: wire current I, seed electron temperature Te, seed phonon temperature Tph, and normal-domain resistance Rd.",fontsize=10,color=MUTED)
     fig.text(.04,.078,"Default closure: domainEnergyClosure = 0; domainSuperheatClosure = 0. The domain has no independent temperature or energy state.",fontsize=10,color=MUTED)
     fig.text(.04,.045,"Domain Joule power I²Rd is a diagnostic; the seed electron equation includes I²Rseed. No Geiger/calorimetric mode switch is present.",fontsize=10,color=MUTED)
-    fig.text(.04,.014,"Smooth bounds, heat-capacity laws, and the critical-nucleus calculation are defined in the model library and detailed in docs/snspd.md.",fontsize=9,color=MUTED)
+    fig.text(.04,.014,"Smooth bounds, heat-capacity laws, and the critical-nucleus calculation are defined in the model library and detailed in docs/snspd_implementation.md.",fontsize=9,color=MUTED)
     for name, node in [("B_PPH4", "NPph4"), ("B_PJSEED4", "NPjSeed4"),
                        ("B_PEPH4", "NPeph4"), ("B_PCOOL4", "NPcool4"),
                        ("B_PDIFF4", "NPdiff4"), ("B_FN4", "Nfn4"),

@@ -4,7 +4,7 @@ The subcircuit `nanowireElectrothermal_NbN_v5c` combines a fixed kinetic inducta
 a two-temperature seed, and a continuous normal-domain boundary model. Its ports
 are `gate`, `gatereturn`, `drain`, and `source`. The gate is a numerical optical-power
 control input; it is not a physical detector terminal.
-The [SNSPD implementation diagrams](snspd.md) show the electrical path,
+The [SNSPD implementation diagrams](snspd_implementation.md) show the electrical path,
 state-integrator circuits, and electrothermal dependencies.
 
 ## State equations

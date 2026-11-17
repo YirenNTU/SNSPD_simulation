@@ -636,7 +636,7 @@ z
    <text style="fill: #63758a; font: 10px 'DejaVu Sans'; text-anchor: start" x="46.08" y="756.36" transform="rotate(-0 46.08 756.36)">Domain Joule power I²Rd is a diagnostic; the seed electron equation includes I²Rseed. No Geiger/calorimetric mode switch is present.</text>
   </g>
   <g id="text_33">
-   <text style="fill: #63758a; font: 9px 'DejaVu Sans'; text-anchor: start" x="46.08" y="780.912" transform="rotate(-0 46.08 780.912)">Smooth bounds, heat-capacity laws, and the critical-nucleus calculation are defined in the model library and detailed in docs/snspd.md.</text>
+   <text style="fill: #63758a; font: 9px 'DejaVu Sans'; text-anchor: start" x="46.08" y="780.912" transform="rotate(-0 46.08 780.912)">Smooth bounds, heat-capacity laws, and the critical-nucleus calculation are defined in the model library and detailed in docs/snspd_implementation.md.</text>
   </g>
  </g>
  <defs>

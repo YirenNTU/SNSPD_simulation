@@ -24,22 +24,22 @@ See [validation](docs/validation.md) for measured quantities, convergence, and l
 
 ## Circuit schematics
 
-![Detector, bias tee, and RF readout](docs/figures/circuit_overview.png)
+![Detector, bias tee, and RF readout](docs/figures/concept_external_circuit.png)
 
-The [circuit documentation](docs/circuit.md) includes the connections within all
-four amplifier stages. Component names, values, and node labels match the netlists.
-The overview uses the SNSPD symbol geometry from the installed LTspice library.
-The [four-page PDF](docs/figures/circuit_schematics.pdf) includes the external
-circuits and detector implementation. SVG and PNG versions are included.
+The [concept figures](docs/concepts.md) explain the external circuit, amplifier
+chain, and detector using physical quantities and component values. The SNSPD
+shape follows the installed symbol library. Simulation identifiers are omitted
+from these presentation figures. Download the
+[three-page concept PDF](docs/figures/model_concepts.pdf); SVG and PNG are included.
 
 ## SNSPD internal model
 
-The [SNSPD section](docs/snspd.md) separately shows the detector current path,
-optical-control branch, numerical state integrators, and electrothermal feedback.
-It maps the library symbol's four pins to the current subcircuit and distinguishes
-the model's auxiliary state circuits from physical detector components.
+The [SNSPD section](docs/snspd.md) explains the electrical response, electron and
+phonon heat balance, and resistance feedback. A separate
+[implementation reference](docs/snspd_implementation.md) maps the equations to
+the code and numerical state circuits.
 
-![SNSPD electrothermal structure](docs/figures/snspd_electrothermal_structure.png)
+![SNSPD electrothermal structure](docs/figures/concept_snspd.png)
 
 ## Quick start
 
@@ -92,14 +92,16 @@ python3 -m unittest discover -s tests -v
 | `results/figures/` | Reference behavior plots |
 | `provenance/` | Source hashes, circuit-value checks, and packaging verification |
 | `docs/` | Model equations, parameter definitions, circuit topology, and validation scope |
-| `docs/figures/`, `scripts/draw_circuit.py` | Circuit schematics and their reproducible renderer |
+| `docs/figures/`, `scripts/draw_concepts.py`, `scripts/draw_circuit.py` | Concept figures, implementation schematics, and renderers |
 | `symbols/` | Original SNSPD symbol geometry, pin metadata, and upstream license |
 
 ## Documentation
 
 - [Model and parameter definitions](docs/model.md)
+- [Circuit and model concepts](docs/concepts.md)
 - [External circuit](docs/circuit.md)
-- [SNSPD structure and implementation](docs/snspd.md)
+- [SNSPD concept](docs/snspd.md)
+- [SNSPD implementation reference](docs/snspd_implementation.md)
 - [Validation and known limitations](docs/validation.md)
 - [Reproducibility and publication](docs/reproducibility.md)
 - [Dependency and attribution notes](NOTICE.md)
