@@ -6,6 +6,7 @@ import json
 import os
 import shutil
 from snspdtool import __version__
+from snspdtool.inductance import parameters as inductance_parameters, render_variant
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -75,13 +76,16 @@ def locate_opamp(explicit=None):
     raise FileNotFoundError('Installed LTspice opamp.sub not found. Use --opamp PATH or LTSPICE_OPAMP_SUB.')
 
 
-def deck(c, opamp):
+def deck(c, opamp, model_path=None):
+    model, _, _ = inductance_parameters(c)
+    if model == 'gl' and model_path is None:
+        raise ValueError('A GL deck requires its generated model path; use build()')
     def inc(p):
         return '.include "' + Path(p).resolve().as_posix() + '"'
     bias = (format(c['bias_voltage_V'], '.15g')
             if c['bias_voltage_V'] is not None else '{I_bias*(10000+20)}')
     return f'''* SNSPD_simulation {__version__}: {c['id']}
-{inc(ROOT/'models/snspd_nbn_v5c.lib')}
+{inc(model_path or ROOT/'models/snspd_nbn_v5c.lib')}
 {inc(opamp)}
 .param TsubCase={c['Tb']:.15g} TcCase={c['Tc']:.15g} IswCase={c['Isw']:.15g}
 .param biasFrac={c['bias']:.15g} photonCount={c['N']} AmpGainCal={c['gain_calibration']:.15g}
@@ -110,13 +114,29 @@ V1 N001 0 {bias}
 def build(c, output, opamp):
     d = Path(output) / c['id']
     d.mkdir(parents=True, exist_ok=True)
-    (d / 'case.cir').write_text(deck(c, opamp))
+    model, _, _ = inductance_parameters(c)
+    model_path = None
+    if model == 'gl':
+        source_path = ROOT/'models/snspd_nbn_v5c.lib'
+        source = source_path.read_text()
+        model_path = d/'detector_gl.lib'
+        model_path.write_text(render_variant(source, c))
+        record = {'base_model_sha256': hashlib.sha256(source_path.read_bytes()).hexdigest(),
+                  'generated_model_sha256': hashlib.sha256(model_path.read_bytes()).hexdigest(),
+                  'inductance_model': model, 'depairing_ratio': c['depairing_ratio'],
+                  'lk_zero_nH': c['lk_zero_nH']}
+        (d/'model_variant.json').write_text(json.dumps(record, indent=2)+'\n')
+    else:
+        # A reused directory must not retain metadata from a previous variant.
+        for name in ['detector_gl.lib', 'model_variant.json']:
+            (d/name).unlink(missing_ok=True)
+    (d / 'case.cir').write_text(deck(c, opamp, model_path))
     (d / 'case.json').write_text(json.dumps(c, indent=2) + '\n')
     return d
 
 
-def compare(result, reference):
-    """Regression bounds preserve observed behavior, including no-trigger cases."""
+def check_behavior(result, reference):
+    """Check event classification, recovery and numerical validity, not amplitude equality."""
     failures = []
     if not result['finite']:
         return ['non-finite trace']
@@ -127,6 +147,25 @@ def compare(result, reference):
         failures.append('event count changed')
     if result['thermal_cap_hit']:
         failures.append('thermal cap reached')
+    if result.get('inductance_guard_hit', False):
+        failures.append('inductance current guard reached')
+    if expected_events and not result['valid_pulse']:
+        failures.append('expected pulse missing')
+    if not expected_events and result['valid_pulse']:
+        failures.append('unexpected trigger')
+    if result['kvl_integral_residual_fraction'] > 0.005:
+        failures.append('integral KVL residual exceeds 0.5%')
+    if result['N'] and abs(result['deposited_relative_error']) > 0.001:
+        failures.append('optical energy normalization differs by >0.1%')
+    return failures
+
+
+def compare(result, reference):
+    """Strict baseline regression, including amplitude and timing."""
+    failures = check_behavior(result, reference)
+    if not result['finite']:
+        return failures
+    expected_events = reference.get('event_count', reference.get('resistance_pulse_count'))
     if expected_events:
         # The 0.2% amplitude tolerance exceeds the measured 0.0083% step effect.
         if abs(result['peak_mV'] - reference['peak_mV']) > max(0.002, 0.002 * abs(reference['peak_mV'])):
@@ -136,12 +175,6 @@ def compare(result, reference):
             failures.append('resistance reset differs by >2 ps')
         if reference.get('fall_90_10_ns') is not None and (result['fall_90_10_ns'] is None or abs(result['fall_90_10_ns'] - reference['fall_90_10_ns']) > 0.002):
             failures.append('output fall time differs by >2 ps')
-    elif result['valid_pulse']:
-        failures.append('unexpected trigger')
-    if result['kvl_integral_residual_fraction'] > 0.005:
-        failures.append('integral KVL residual exceeds 0.5%')
-    if result['N'] and abs(result['deposited_relative_error']) > 0.001:
-        failures.append('optical energy normalization differs by >0.1%')
     return failures
 
 

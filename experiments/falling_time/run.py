@@ -136,7 +136,8 @@ def prepare(c, directory, opamp):
 
 def measurements(c, directory):
     row = analyze(c, directory)
-    # Generic analyzer assumes a fixed 38 nH; replace its KVL result below.
+    # Historical configurations predate the explicit inductance option; replace
+    # the generic analyzer's fixed-38-nH KVL result with the recorded probe law.
     row.pop('kvl_integral_residual_fraction', None)
     w = read(directory / 'case.raw')
     t = w['time']; tp = c['photon_ns'] * 1e-9
@@ -153,6 +154,8 @@ def measurements(c, directory):
     row['flux_kvl_residual_fraction'] = float(np.max(np.abs(residual))/phi_bias)
     row['max_current_over_depairing'] = float(np.max(np.abs(current[prepared]))/idep) if idep else None
     row['flux_guard_hit'] = bool(idep and row['max_current_over_depairing'] >= .999)
+    row['inductance_model'] = 'gl' if idep else 'fixed'
+    row['inductance_guard_hit'] = row['flux_guard_hit']
     for label, key in [('output', 'v(n011)'), ('rf', 'v(n013)')]:
         y = w[key] - time_mean(t, w[key], pre)
         row[label+'_fall_90_10_ns'] = decay(t, y, post) if row['valid_pulse'] else None

@@ -7,7 +7,8 @@ import json
 import sys
 from pathlib import Path
 from snspdtool.simulation import run_deck
-from snspdtool.core import ROOT, build, check, compare, locate_ltspice, locate_opamp, references, selected
+from snspdtool.core import ROOT, build, check, check_behavior, compare, locate_ltspice, locate_opamp, references, selected
+from snspdtool.inductance import configure
 
 
 def main():
@@ -21,8 +22,14 @@ def main():
     p.add_argument('--opamp', help='Path to the installed LTspice opamp.sub')
     p.add_argument('--jobs', type=int, default=1)
     p.add_argument('--compare', action='store_true', help='Compare analyzed results with stored reference measurements')
+    p.add_argument('--check-behavior', action='store_true', help='Check triggering, reset, and numerical validity without requiring baseline amplitudes')
+    p.add_argument('--inductance-model', choices=['fixed', 'gl'], default=None, help='Build/run only; default fixed, gl explicitly enables the near-Tc candidate')
+    p.add_argument('--depairing-ratio', type=float, help='GL: depairing current divided by switching current')
+    p.add_argument('--lk-zero-nh', type=float, help='GL: zero-current electrical inductance, independent of geometry')
     p.add_argument('--overwrite', action='store_true', help='Explicitly replace an existing simulation in the output directory')
     a = p.parse_args()
+    if a.command not in ['build', 'run'] and any(v is not None for v in [a.inductance_model, a.depairing_ratio, a.lk_zero_nh]):
+        raise ValueError('Inductance options apply to build/run; analysis uses the saved case.json')
     if a.command == 'check':
         print(json.dumps(check(), indent=2))
         return 0
@@ -36,6 +43,7 @@ def main():
     if not (a.ids or a.group or a.smoke):
         raise ValueError('Select --case, --group, or --smoke explicitly')
     if a.command in ['build', 'run']:
+        cs = [configure(c, a.inductance_model or 'fixed', a.depairing_ratio, a.lk_zero_nh) for c in cs]
         opamp = locate_opamp(a.opamp)
         for c in cs:
             if (a.output / c['id'] / 'case.raw').exists() and (not a.overwrite):
@@ -52,6 +60,8 @@ def main():
             print("Completed " + c["id"], flush=True)
         with concurrent.futures.ThreadPoolExecutor(max_workers=max(1, a.jobs)) as pool:
             list(pool.map(run, cs))
+    if a.command in ['analyze', 'plot']:
+        cs = [json.loads((a.output/c['id']/'case.json').read_text()) for c in cs]
     if a.command in ['run', 'analyze']:
         from snspdtool.analysis import analyze
         refs = references()
@@ -62,14 +72,15 @@ def main():
             r = analyze(c, d)
             results.append(r)
             (d / 'metrics.json').write_text(json.dumps(r, indent=2) + '\n')
-            if a.compare:
-                errs = compare(r, refs[c['id']])
+            if a.compare or a.check_behavior:
+                errs = compare(r, refs[c['id']]) if a.compare else check_behavior(r, refs[c['id']])
                 if errs:
                     failures[c['id']] = errs
             print(f'{c['id']}: peak={r.get('peak_mV', float('nan')):.6f} mV, events={r.get('event_count')}, recovered={r.get('recovered')}', flush=True)
         summary = {
             'cases': len(results),
             'comparison_requested': a.compare,
+            'behavior_check_requested': a.check_behavior,
             'failures': failures,
             'results': results,
         }
@@ -79,6 +90,8 @@ def main():
             return 1
         if a.compare:
             print(f'Reference comparisons passed: {len(results)}')
+        elif a.check_behavior:
+            print(f'Behavior checks passed: {len(results)}')
     if a.command == 'plot':
         import numpy as np
         import matplotlib

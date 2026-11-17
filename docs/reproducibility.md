@@ -37,6 +37,11 @@ is included but has not been validated by a Windows simulation run.
 
 ## Release verification
 
+The experimental current-dependent inductance option has a separate
+[verification protocol and results](current_dependent_inductance.md).
+`provenance/inductance_verification.json` records its 64-run comparison with the
+unchanged default model. This record does not replace the release references.
+
 The release includes the latest model, earlier Geiger models, external circuit,
 32 case definitions, reference metrics, circuit figures, response CSV files,
 and the final Keynote/PDF presentation. Temporary builders, duplicate trace JSON,

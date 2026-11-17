@@ -96,6 +96,12 @@ The tested 30 pF Geiger cases show triggering, amplitude saturation, and recover
 Near-transition responses remain energy-dependent, and low-energy peak amplitude
 is non-monotonic.
 
+This experimental branch also provides an explicit
+[current-dependent inductance option](docs/current_dependent_inductance.md).
+It leaves the fixed-inductance default and original model files unchanged.
+The [controlled falling-time experiment](experiments/falling_time/README.md)
+documents its motivation and physical limitations.
+
 The experimental overlay is peak-aligned without amplitude rescaling. Experimental
 deposited energy is unavailable; it is a waveform comparison, not a matched-energy
 validation. Numerical regression checks establish reproducibility, not full

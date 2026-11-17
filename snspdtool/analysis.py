@@ -6,6 +6,7 @@ import numpy as np
 from scipy.integrate import cumulative_trapezoid
 from scipy.signal import find_peaks
 from PyLTSpice import RawRead
+from snspdtool.inductance import CURRENT_LIMIT, flux_linkage, parameters as inductance_parameters
 
 
 def read(path):
@@ -91,7 +92,10 @@ def analyze(c, run_directory):
             event_times.append(float(t[j]))
     ti = t[prepared]
     drive = g('V(N012)') - g('V(N024)') - (R + 1e-05) * I
-    kvl = 3.8e-08 * (I[prepared] - I[prepared][0]) - cumulative_trapezoid(drive[prepared], ti, initial=0)
+    inductance_model, _, idep = inductance_parameters(c)
+    phi = flux_linkage(I[prepared], c)
+    kvl = phi - phi[0] - cumulative_trapezoid(drive[prepared], ti, initial=0)
+    phi_bias = float(flux_linkage(expected, c))
     vwire = g('V(wire:NET4)') - g('V(N024)')
     valid_pulse = bool(c['N'] and peak > 1e-06 and (max(R[post]) > 0.01))
     row.update(
@@ -119,7 +123,10 @@ def analyze(c, run_directory):
         valid_pulse=valid_pulse,
         event_count=len(event_times),
         event_peak_times_ns=[(x - tp) * 1e9 for x in event_times],
-        kvl_integral_residual_fraction=float(max(abs(kvl)) / (3.8e-08 * expected)),
+        kvl_integral_residual_fraction=float(max(abs(kvl)) / phi_bias),
+        inductance_model=inductance_model,
+        inductance_guard_hit=bool(idep is not None and max(abs(I[prepared]))/idep >= CURRENT_LIMIT),
+        max_current_over_depairing=float(max(abs(I[prepared]))/idep) if idep else None,
         resistor_voltage_error_V=float(max(abs(vwire - R * I)[prepared])),
         thermal_cap_hit=bool(max(Te[prepared]) >= 49.99 or max(Tph[prepared]) >= 49.99),
         domain_joule_eV=float(np.trapezoid(g('V(wire:NPjDomain4)'), t) / eps),
