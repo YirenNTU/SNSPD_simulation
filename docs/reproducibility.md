@@ -6,10 +6,10 @@ All operating conditions are stored in `cases/`. Netlists are generated from a
 single detector model and two shared external-circuit files. Absolute installation
 paths appear only in generated files under `runs/`; they are not stored in source.
 
-`provenance/source_manifest.json` records the source model, schematic, and audited
-deck hashes. The packaged model adds a descriptive header; its equations and
-parameter defaults are unchanged. Original schematics and large raw waveforms are
-not redistributed.
+`provenance/source_manifest.json` records source model, schematic, and deck hashes.
+The latest model's header is condensed; active SPICE lines and parameter defaults
+are unchanged. `provenance/legacy_manifest.json` records the earlier subcircuits,
+native BCF schematic, and symbol. Large raw waveforms are not redistributed.
 
 `results/reference/` contains the original numerical measurements. The packaging
 smoke check regenerates seven representative cases and compares their peaks,
@@ -35,6 +35,22 @@ is included but has not been validated by a Windows simulation run.
 5. Label any updated baseline separately; do not overwrite reference results
    merely to pass a regression check.
 
+## Release verification
+
+The release includes the latest model, earlier Geiger models, external circuit,
+32 case definitions, reference metrics, circuit figures, response CSV files,
+and the final Keynote/PDF presentation. Temporary builders, duplicate trace JSON,
+intermediate slide decks, local run outputs, and older experimental model variants
+are excluded. LTspice and its `opamp.sub` remain external dependencies.
+
+```sh
+python3 scripts/package.py --output runs/SNSPD_simulation_v0.1.1.zip
+python3 scripts/package.py --verify runs/SNSPD_simulation_v0.1.1.zip
+```
+
+`MANIFEST.json` lists every packaged file, byte size, and SHA-256 digest.
+`provenance/release_verification.json` records the cleanup regression checks.
+
 ## Git publication
 
 This directory is an independent repository. The surrounding research project is
@@ -46,10 +62,8 @@ No remote repository is assumed. After selecting a destination:
 ```sh
 git remote add origin REMOTE_URL
 git push -u origin main
-git push origin v0.1.0
+git push origin v0.1.1
 ```
 
-If the repository is restored from the supplied Git bundle, its initial `origin`
-points to that bundle. Replace it with `git remote set-url origin REMOTE_URL` before
-pushing. No public deployment or repository visibility change is performed by the
-simulation tools.
+The release ZIP contains source files without Git history. After extracting it,
+initialize and commit the directory with Git before configuring a remote.

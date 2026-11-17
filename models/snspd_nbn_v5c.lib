@@ -1,35 +1,12 @@
-* SNSPD_simulation 0.1.0 research snapshot, 2026-11-17.
-* Equations and parameter defaults are unchanged from the audited numerical-review model.
-* Full 30 pF readout: tested Geiger cases recover; near-Tc energy dependence remains.
-* Near-Tc output fall-time bias trend and low-energy monotonicity remain unresolved.
-* See docs/validation.md and docs/model.md for scope and provenance.
-* Historical 150 pF retriggering below refers only to that old readout configuration.
-* Numerical representation review, 2026-11-17.
-* Physical/material parameters match snspd_nbn_v5c_tauEP_corrected.lib.
-* Wire and photon-control currents are sensed with ideal series 0 V sources.
-* The existing 10 microohm inductor series resistance is made explicit;
-* the electrical resistance and kinetic inductance are unchanged.
-* This avoids relying on quasi-static element-current references in B sources.
-* B-source current-reference caveat: Analog Devices, Behavioral Sources,
+* NbN electrothermal model: nanowireElectrothermal_NbN_v5c.
+* Shared equations for Geiger and near-transition operation.
+* States: detector current, seed electron and phonon temperatures, domain resistance.
+* Ideal 0 V sources sense currents used by behavioral sources.
+* Kinetic inductance is fixed; the explicit numerical series resistance is 10 uohm.
+* Use the initialization and precision settings in the generated case decks.
+* Parameters, assumptions, references, and limitations: docs/model.md and docs/validation.md.
+* Behavioral current-reference guidance: Analog Devices, Behavioral Sources,
 * https://ez.analog.com/cfs-file/__key/docpreview-s/00-00-01-54-13/todaysslidedeck6141655150841730.pdf
-* Use the supplied cold-state initialisation and precision settings in the decks.
-* Numerical convergence is not validation of physical parameter values.
-* At Tb=4.68 K and Ib=0.96 Isw, the full 150 pF circuit still retriggers;
-* it does not yet reproduce the observed single-pulse stable reset.
-*************************************
-* nanowireElectrothermal_NbN_v5c
-* Experimental critical-nucleus closure; v4 remains the accepted baseline.
-*
-* Dynamic states:
-*   i(V_SN_SENSE4)  nanowire current
-*   NdTe4      fixed-seed electron temperature relative to the bath [K]
-*   NdTph4     fixed-seed phonon temperature relative to the bath [K]
-*   NRdom4     propagated full-width normal-domain resistance [ohm]
-*
-* No calorimetric/Geiger selector, reset switch, event timer, or stored mode
-* bit is used.  The two detector regimes are outcomes of the same continuous
-* electrothermal equations.  Lk remains the measured fixed inductance.
-*************************************
 
 .subckt nanowireElectrothermal_NbN_v5c gate gatereturn drain source
 + params: Lind=38n width=200n thickness=15n Iinit4=0

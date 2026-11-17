@@ -33,8 +33,8 @@ frequency response. Final amplitude calibration depends on the selected case.
 
 ## SNSPD
 
-The [SNSPD concept section](snspd.md) gives the electrical equation, two-temperature
-seed equations, and the feedback between resistance, current, and heating.
+The [SNSPD structure](snspd.md) labels the model components and their functions.
+The [model reference](model.md) defines the electrical and thermal equations.
 
 Regenerate these figures with `python3 scripts/draw_concepts.py`. The detailed
 [external-circuit reference](circuit.md) and

@@ -1,0 +1,26 @@
+{
+  "source_library": "LTspice_model/snspd.lib",
+  "source_sha256": "bff470af6f3fc62caec0b54bf416f3acb969ad2b37c757a253ec68f418140552",
+  "subcircuits": {
+    "nanowireBCF": {
+      "body_sha256": "9fcca219a65f8906c81d913dd9c91a8e625e32811139eb9dc8661a2a598be7de",
+      "equations_and_defaults": "unchanged"
+    },
+    "nanowireDynamic": {
+      "body_sha256": "f8c5f52a06c5324e75cd35d9291e482eb3790a6a77446d27a31f1526b337d2ba",
+      "equations_and_defaults": "unchanged"
+    }
+  },
+  "original_schematics": {
+    "snspd-bcf.asc": "122bd51ea07be686c6829879742118e32b18002bce1ab7483038f7730cfa6fba",
+    "SNSPD_dynamic.asc": "6c415a339bea20c5439bba0164f2f8c9aae1701373540a44f7bc54200c9dfcdb"
+  },
+  "schematic_change": "Only the include filename was changed to snspd_geiger.lib. The duplicated SNSPD_dynamic.asc differs only in its title and is omitted. Both original schematics inherit nanowireBCF from their symbol.",
+  "symbol_original_sha256": "a03aaec013adb6053f0c0534a33456ec69db18ca5f7d3d54b1b2814790eadff2",
+  "symbol_change": "Only ModelFile changed to snspd_geiger.lib.",
+  "packaged_sha256": {
+    "snspd_geiger.lib": "e73eb1f8e115869122666b8a8bb3aad1107f5ae504550db3655b7463e59e934e",
+    "snspd-bcf.asc": "864a96796b8298e14c76512f0315284b672c6e5b137be37192c7256e5d00c4e8",
+    "snspdWithPhotonPort.asy": "4b5604506d20f1e98318c2966358528b82bef6013b76d924078a9213bdaa3266"
+  }
+}

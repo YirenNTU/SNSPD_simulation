@@ -1,0 +1,77 @@
+{
+  "version": "0.1.1",
+  "date": "2026-11-17",
+  "python": "3.12.3",
+  "platform": "Darwin",
+  "scope": "Source packaging and numerical reproducibility; no new physical calibration.",
+  "model_active_lines_unchanged": true,
+  "model_active_lines_sha256": "35a452937f68e9de4fb379e83ad7ca9b854c743bb62c84d88805e221f60502b7",
+  "latest_model_netlists_compared": 32,
+  "latest_model_active_netlists_unchanged": true,
+  "existing_waveforms_reanalyzed": [
+    "geiger_c30_high_dt005",
+    "calorimetric_c30_b90_n1",
+    "calorimetric_c30_b90_n4",
+    "calorimetric_c30_b60_n10",
+    "calorimetric_c30_b90_n10",
+    "calorimetric_c30_b96_n10",
+    "calorimetric_asc120_b90_n10"
+  ],
+  "all_reanalyzed_metrics_exactly_equal": true,
+  "unit_tests_passed": 7,
+  "fresh_latest_simulations": {
+    "case_ids": [
+      "calorimetric_c30_b90_n10"
+    ],
+    "reference_comparison_passed": true
+  },
+  "legacy_examples": {
+    "bcf": {
+      "completed": true,
+      "finite": true,
+      "points": 60055,
+      "pre_current_uA": 99.80008294567297,
+      "tail_current_uA": 100.16401169555724,
+      "peak_output_mV": 1101.399312067813,
+      "deck_sha256": "0ca5aa8cc8d634e24a45bb408ef767237df526fbca7e5c6351810f48b6a23820",
+      "opamp_sha256": "b840cd29f0b7b793256f2807e6468dfcc36ae0af5fe935443b33bc664e8cf77d"
+    },
+    "dynamic": {
+      "completed": true,
+      "finite": true,
+      "points": 60068,
+      "pre_current_uA": 99.80038914173436,
+      "tail_current_uA": 100.12060761881204,
+      "peak_output_mV": 953.5134520237078,
+      "deck_sha256": "744967d5188f22db2e014b30da6f9fadb97105cd6eeea931938affcf79d686e7",
+      "opamp_sha256": "b840cd29f0b7b793256f2807e6468dfcc36ae0af5fe935443b33bc664e8cf77d"
+    }
+  },
+  "external_components_checked": 37,
+  "internal_elements_checked": 25,
+  "response_csv_count": 8,
+  "presentation_files": [
+    "SNSPD_model_concepts.key",
+    "SNSPD_model_concepts.pdf",
+    "SNSPD_equations.tex"
+  ],
+  "old_release_source_files_retained": true,
+  "excluded_old_release_metadata": [
+    "RESTORE_GIT.txt",
+    "git-history.bundle",
+    "release.json"
+  ],
+  "fresh_archive_check": {
+    "package_check_passed": true,
+    "unit_tests_passed": 7,
+    "latest_model_decks_built": 32,
+    "all_deck_includes_resolved": true,
+    "legacy_examples_completed": [
+      "bcf",
+      "dynamic"
+    ],
+    "response_plots_reproduced": 3,
+    "manifest_tamper_detection_passed": true,
+    "all_preexisting_tracked_files_included": true
+  }
+}

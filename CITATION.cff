@@ -1,8 +1,8 @@
 cff-version: 1.2.0
-message: "Please cite the software version and relevant model references when using this research snapshot."
+message: "Please cite the software version and relevant model references when using this software."
 title: "SNSPD electrothermal simulation"
 type: software
-version: 0.1.0
+version: 0.1.1
 date-released: 2026-11-17
 authors:
   - family-names: Wu

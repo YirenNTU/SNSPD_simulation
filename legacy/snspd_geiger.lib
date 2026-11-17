@@ -1,0 +1,199 @@
+* Earlier Geiger models from LTspice_model/snspd.lib.
+* Subcircuit bodies are preserved without equation or parameter changes.
+* See README.md for operating conditions and attribution.
+
+.subckt nanowireBCF gate gatereturn drain source
++Lind=65n Isw={Jc*width*thickness*C}
++width=200n thickness=15n sheetRes=165
++Tc=12 Tsub=11.37 Jc=4.2G C=1
+  *Jc at T=Tsub in units of amps/m2
+  *sheetRes has units of ohms/sq
+  *Tc is critical temp and has units of K
+  *Tsub is substrate temp and has units of K
+  *C is constrition factor
+
+*Dimensions
+.PARAM length={width*Lind/inductivity}
+.PARAM squares={length/width}
+
+*Thermal Parameters
+.PARAM kappa = 0.108
+  * thermal conductivity
+  * in W/m K
+.PARAM heatCapacity = 4400
+  * heat capacity per unit
+  * volume in J/m^3 K
+.PARAM hc = 150k
+
+  * hc is the thermal conductivity
+  * of the surface, units of W/m^2 K
+
+*Electrical/Superconducting Parameters
+.PARAM inductivity = {1.38p*sheetRes/Tc}
+  * units of H/square
+.PARAM  minSquares = 1
+  * # of squares for min resistance
+.PARAM maxSquares = 2000
+  * units of ohms/square
+.PARAM psi={sheetRes*(Jc*thickness)**2 /(hc*(Tc-Tsub))}
+  * psi is the Stekly parameter.
+.PARAM f={sqrt(2/psi)}
+  * quantify hysteresis of Ihs vs Isw
+.PARAM Ihs={(f)*Isw}
+  * hotspot current level
+
+*Unitless Parameters
+.PARAM gain={10}
+  * factor photon signal gets multiplied by
+.PARAM epsilon = {0.01}
+  * provides margins for switching
+
+* Maximum impedance of inductor, helps with solver convergence
+.PARAM Ind_Z_max = 1e8
+* ohms set to a few orders of magnitude above the largest expected
+* impedance as calculated by Lind_x*2*pi*f_max where f_max = 0.31/t_rise_min
+* is the maximum frequency in Hz based on the fastest dynamics of the
+* circuit in seconds
+* For normal nTron inductors (e.g. 200 squares of 20pH/sq), a rise time of
+* 10ps gives about 1kohm max impedance, so 1e6 is acceptable
+
+** MAIN CIRCUIT **
+
+* channel Inductor
+* L1 drain N1 {Lind} Rser = 1e-10 Rpar = {Ind_Z_max}
+L1 drain N1 Flux=({Lind}/(2.0*cos(0.67*asin(0.6*x/{Isw}))-1))*x Rser = 1e-10 Rpar = {Ind_Z_max}
+
+* photodetection-event current sensor
+V1 N1 N2 0
+
+* photodetection event current
+B2 N2 N1 I=IF(I(V1)>0,gain*I(R3),-gain*I(R3))
+
+* hotspot plateau current source
+B1 N2 source I=IF(v(n2,source)>0,Ihs,-Ihs)
+
+* hotspot limiting resistor
+R2 N2 source {maxSquares*sheetRes}
+
+* gate input resistor
+R3 gate gatereturn 1
+
+* current sense switch, detects photon arrival
+* actuates in the i>0 range
+W1 N2 N3 V1 currentSwitch OFF
+* actuates in the i<0 range
+W2 N3 N4 V1 negCurrentSwitch ON
+.PARAM hiIthresh = {Isw }
+.PARAM loIthresh = {Isw *(f + epsilon)}
+* model goes normal above hiIthresh and resets below loIThresh
+.model currentSwitch CSW(Ron=1e9 Roff=.01 It={(hiIthresh+loIthresh)/2} Ih={(hiIthresh-loIthresh)/2})
+* model goes normal below -hiIthresh and resets above -loIthresh
+.model negCurrentSwitch CSW(Ron=.01 Roff=1e9 It={-(hiIthresh+loIthresh)/2} Ih={(hiIthresh-loIthresh)/2})
+
+* voltage sense switches
+* actuates in the v>0 range
+S1 N4 N5 N2 source voltageSwitch OFF
+* actuates in the v<0 range
+S2 N5 source N2 source negVoltageSwitch ON
+
+.PARAM Vthresh={minSquares*sheetRes*Ihs}
+.model voltageSwitch SW(Ron=1e9 Roff=.01 Vt={Vthresh} Vh=0)
+.model negVoltageSwitch SW(Ron=.01 Roff=1e9 Vt={-Vthresh} Vh=0)
+.ends nanowireBCF
+
+.subckt nanowireDynamic gate gatereturn drain
++ source params: Lind=65n Isw={Jc*
++width*thickness*C} width=200n thickness=15n
++ sheetRes=165 Tc=12 Tsub=4.68 Jc=42.3G C=1
++ useGeomSeed=0 Nhot0=1 tseed_ph=5p
+*Jc at T=Tsub in units of amps/m2
+*sheetRes has units of ohms/sq
+*Tc is critical temp and has units of K
+*Tsub is substrate temp and has units of K
+*C is constrition factor
+*Dimensions
+.PARAM length={width*Lind/inductivity}
+.PARAM squares={length/width}
+*Thermal Parameters
+.PARAM kappa = 0.108
+* thermal conductivity W/m K
+.PARAM heatCapacity = 4400
+* heat capacity J/m^3 K
+.PARAM hc = 600k
+
+* thermal conductivity of surface W/m^2 K
+*Electrical/Superconducting Parameters
+.PARAM inductivity = {1.38p*sheetRes/Tc}
+* H/square
+.PARAM minSquares = 1
+* # squares for minimum resistance
+.PARAM Rnorm = {sheetRes*squares}
+* units of ohms/square
+.PARAM psi={sheetRes*(Jc*thickness)**2/
++(hc*(Tc-Tsub))}
+* psi is the Stekly parameter.
+.PARAM vo={sqrt(hc*kappa/thickness)/
++heatCapacity}
+* vo is characteristic velocity
+.PARAM Ihs={sqrt(2/psi)*Isw}
+.PARAM Vthresh={minSquares*sheetRes*Ihs}
+.PARAM rho={sheetRes*thickness}
+*Unitless Parameters
+.PARAM gain={10}
+* factor photon signal gets multiplied by
+.PARAM delta={0.005}
+* a small offset value for avoiding
+* singularity in hotspot velocity
+** MAIN CIRCUIT **
+*channel inductor
+L1 drain N1 Flux=({Lind}/(2*cos(0.67*
++asin(0.6*x/{Isw}))-1))*x Rser = 1e-5
+* hotspot resistor
+B1 N1 source V=(v(N3)+abs(v(N3)))/2*i(L1)
+* v(N3) is resistance of hotspot
+* hotspot limiter
+R1 N1 source {Rnorm}
+* prevents channel resistance from
+* increasing without bound
+
+*photon arrival sense resistor
+R3 gate gatereturn 1e-5
+** S/C SENSE SUBCIRCUIT **
+**Superconducting to Resistive Transition
+*dependent source used to store state
+* With useGeomSeed=1, the seed IS a normal domain: force N2=1 during the seed
+* pulse and while an established hotspot exists (Rhot>0.5*sheetRes), so S1 does
+* not short the seed before it establishes. useGeomSeed=0 keeps original behavior.
+B2 N2 0 V=if((abs(i(L1))>Isw-gain*
++abs(i(R3)))|(abs(v(N1)-v(source))>{Vthresh})
++|((useGeomSeed>0.5)&((v(NinPulseDyn)>0.5)|(v(N3)>0.5*sheetRes))),1,0)
+R2 N2 0 1
+* v(N2) is 0 if wire s/c, 1 if not
+** HOTSPOT GROWTH INTEGRATOR SUBCIRCUIT **
+*dependent current source that represents
+*hotspot S-N boundary velocity
+* Front gated off during the geometric-seed pulse (useGeomSeed=1) so the seed
+* injection sets the initial hotspot cleanly; B3 governs afterwards.
+B3 0 N3 I=(1-useGeomSeed*v(NinPulseDyn))*if(v(N2),(psi*(i(L1)/Isw)**2-2)
++/((sqrt(((psi*(i(L1)/Isw)**2-1)+abs(psi*
++(i(L1)/Isw)**2-1))/2)+delta)),0)
+*capacitor that integrates hotspot velocity
+C1 N3 0 {(width)/(2*sheetres*vo)}
+* hotspot resistance is v(N3)
+* ------------------------------------------------------------------
+* Optional geometric photon-energy seed (useGeomSeed=1):
+* during the photon pulse, drive Rhot=V(N3) toward Nhot0*sheetRes.
+* C1 here is NOT 1F, so scale the seed-drive current by the integrator
+* capacitance Cn3 to get a time constant tseed_ph.
+.PARAM Cn3={(width)/(2*sheetRes*vo)}
+.PARAM tinyD=1e-30
+B_NinPulseDyn NinPulseDyn 0 V=0.5*(1+tanh((sqrt(i(R3)*i(R3)+1e-24)-1e-9)/1e-10))
+R_NinPulseDyn NinPulseDyn 0 1G
+B_seedDriveDyn 0 N3 I=useGeomSeed*v(NinPulseDyn)*Cn3
++*(min(Rnorm,Nhot0*sheetRes)*tanh(abs(i(R3))/1e-7)-v(N3))/max(tseed_ph,tinyD)
+* ------------------------------------------------------------------
+*switch that shorts capacitor to ground when
+*superconductivity is restored
+S1 N3 0 N2 0 Srestore OFF
+.model Srestore SW(Vt={0.5V} Roff=1m Ron=10G)
+.ends nanowireDynamic

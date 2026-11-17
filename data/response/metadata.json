@@ -1,0 +1,107 @@
+{
+  "experimental_source": "SNSPD_Laser_measurements/Stats/4p68K/1555_1000mV_240degrees_4p68K_stats.json",
+  "experimental_sha256": "93e3c5fa390f03d205721b0ff5b678b24fde304dbc9a703d998d02890b39c7af",
+  "experimental_time_step_ns": 0.4,
+  "experimental_time_source": "SNSPD_Laser_measurements/python/NIPXIE/plot_examples.py:233; plot_multiHistograms.py:234",
+  "processing": "Baseline subtraction. Experiment/model comparison aligned at each output peak. No amplitude scaling. Simulation energy sweeps share optical onset at t=0.",
+  "limits": [
+    "Experimental deposited energy and full acquisition-chain calibration are not supplied by the statistics file.",
+    "The comparison is a waveform overlay, not a matched-energy validation.",
+    "Energy labels are deposited model energy, not individual photon energy."
+  ],
+  "simulations": [
+    {
+      "name": "geiger_comparison",
+      "raw_sha256": "e57281a82b19b46c982f304aaf9a0057a9d02351d60695223ea003112d3d9fb6",
+      "energy_eV": 1.8656927687258877,
+      "peak_mV": 1010.6215051015535,
+      "fall_90_10_ns": 1.5319830929017462,
+      "source_raw_filename": "c30_schematic_1V_N8.raw",
+      "case_id": "geiger_c30_schematic_1V_N8",
+      "csv_file": "geiger_comparison.csv",
+      "time_origin": "output peak"
+    },
+    {
+      "name": "geiger_energy_low",
+      "raw_sha256": "fbfff1f3c64956538bcfe2b9ee163731931a46092d4f7d6fd254add176a927fd",
+      "energy_eV": 0.23321159609073439,
+      "peak_mV": 1088.2714533195256,
+      "fall_90_10_ns": 1.5321266911318405,
+      "source_raw_filename": "case.raw",
+      "case_id": "geiger_c30_high_dt005",
+      "csv_file": "geiger_energy_low.csv",
+      "time_origin": "optical input"
+    },
+    {
+      "name": "geiger_energy_high",
+      "raw_sha256": "a93fd2db1951cb2206663fcbc8be80c23378ff151a2f1355a5c5b56f0d52ad32",
+      "energy_eV": 1.8656927645933121,
+      "peak_mV": 1088.1450673030322,
+      "fall_90_10_ns": 1.5321313522279685,
+      "source_raw_filename": "c30_high_N8.raw",
+      "case_id": "geiger_c30_high_N8",
+      "csv_file": "geiger_energy_high.csv",
+      "time_origin": "optical input"
+    },
+    {
+      "name": "calorimetric_energy_n1",
+      "raw_sha256": "ac586a250a044d0ad37322feb1bee974348c1d330212011e85df5fc3cc930ca0",
+      "energy_eV": 0.23321159609071596,
+      "peak_mV": 16.262094353346445,
+      "fall_90_10_ns": 1.5314557189551699,
+      "source_raw_filename": "c30_b90_n1.raw",
+      "case_id": "calorimetric_c30_b90_n1",
+      "csv_file": "calorimetric_energy_n1.csv",
+      "time_origin": "optical input"
+    },
+    {
+      "name": "calorimetric_energy_n4",
+      "raw_sha256": "7677137b5cbe2065f080d8094a00e9e263433b3c4d838a5d167ac9e71648d535",
+      "energy_eV": 0.9328463843629349,
+      "peak_mV": 15.85131618617235,
+      "fall_90_10_ns": 1.5326068535019783,
+      "source_raw_filename": "c30_b90_n4.raw",
+      "case_id": "calorimetric_c30_b90_n4",
+      "csv_file": "calorimetric_energy_n4.csv",
+      "time_origin": "optical input"
+    },
+    {
+      "name": "calorimetric_energy_n10",
+      "raw_sha256": "1faaca55f2afe10ef6f279d4e0f999b4f1d71aa1dd40c23fd6e7eb7be0e2b373",
+      "energy_eV": 2.33211596090734,
+      "peak_mV": 24.56282368134007,
+      "fall_90_10_ns": 1.533073023375715,
+      "source_raw_filename": "c30_b90_n10.raw",
+      "case_id": "calorimetric_c30_b90_n10",
+      "csv_file": "calorimetric_energy_n10.csv",
+      "time_origin": "optical input"
+    },
+    {
+      "name": "calorimetric_energy_n100",
+      "raw_sha256": "d4a0e4507f015bcea290e58d88f75b1849b2043973422b29825cadda78dab26f",
+      "energy_eV": 23.32115960907365,
+      "peak_mV": 45.83029837117099,
+      "fall_90_10_ns": 1.533303170551659,
+      "source_raw_filename": "c30_b90_n100.raw",
+      "case_id": "calorimetric_c30_b90_n100",
+      "csv_file": "calorimetric_energy_n100.csv",
+      "time_origin": "optical input"
+    }
+  ],
+  "csv_processing": {
+    "simulation_baseline": "Time-weighted mean from 2 to 1 ns before optical input.",
+    "simulation_sampling": "Linear interpolation onto a 0.025 ns grid from -4 to 16 ns.",
+    "experimental_baseline": "Mean of samples more than 20 ns before the output peak.",
+    "experimental_sampling": "Original 0.4 ns sampling; displayed interval -4 to 16 ns relative to the peak."
+  },
+  "csv_sha256": {
+    "calorimetric_energy_n1.csv": "46931df7408e69872bfb704fff07ca95c9961c86925da48888b80484ccfa6efe",
+    "calorimetric_energy_n10.csv": "3884cefa433670cc224488e6c588326c3f2dc8153d0240ee3c09b74d1cae15f3",
+    "calorimetric_energy_n100.csv": "21a3a74fe5044792512554a2f54cce8b355dd8a142fcdfaed7a7cb323ea88b55",
+    "calorimetric_energy_n4.csv": "ae6e5fa6fbe44c3e773437d16b164ed6638aeb188b98729556426726150ebb48",
+    "experiment.csv": "4b3f16d37f695656c0922396585825e4b6e1598420d21d2a7727a91e01682b19",
+    "geiger_comparison.csv": "71f41a2b03c78d8558c96f0942025ecd49df18cd5bac0d1180b410330b4c5d95",
+    "geiger_energy_high.csv": "844a2d4d74ce64a1a3d4bd8fc8d02257dae04a6d9fcaf40d7805e3d571a59d2b",
+    "geiger_energy_low.csv": "66ea4d888dc57106081bc187f40af0d900745590e70436c010362947a81fa389"
+  }
+}

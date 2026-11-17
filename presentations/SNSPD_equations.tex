@@ -1,0 +1,106 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=25mm]{geometry}
+\title{SNSPD Model Equations}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+
+\section*{Equations shown in the presentation}
+% Slide 1: the two explicit resistive RF branches.
+\[
+50\,\Omega\parallel50\,\Omega=25\,\Omega .
+\]
+This is the parallel resistance of the two RF shunts. The complete
+frequency-dependent detector load also includes the series return and
+reactive elements.
+
+% Slides 2--4: non-inverting gain and nominal gain blocks.
+\[
+K=1+\frac{R_{\mathrm{f}}}{R_{\mathrm{g}}},
+\qquad G=12.281 .
+\]
+\[
+\text{Section 1: }R_{\mathrm{f}}=15.2\,\mathrm{k}\Omega,
+\qquad
+\text{Section 2: }R_{\mathrm{f}}=123.5\,\mathrm{k}\Omega,
+\qquad R_{\mathrm{g}}=100\,\mathrm{k}\Omega .
+\]
+
+% Slide 5: conceptual electrical equation.
+\[
+L_k\frac{\mathrm{d}I}{\mathrm{d}t}
+=V_{\mathrm{d}}-V_{\mathrm{s}}-I R_{\mathrm{wire}} .
+\]
+\[
+R_{\mathrm{wire}}
+=\min\!\left[R_{\mathrm{n}},
+\max\!\left(R_{\mathrm{seed}}+R_{\mathrm{d}},0\right)\right] .
+\]
+Here $R_{\mathrm{seed}}$ is the heated-seed resistance,
+$R_{\mathrm{d}}$ is the propagated-domain resistance, and
+$R_{\mathrm{n}}$ is the fully normal wire resistance.
+The conceptual circuit equation omits the numerical series resistance
+$R_{\mathrm{s,num}}=10\,\mu\Omega$. The implemented electrical equation
+includes the additional term $-I R_{\mathrm{s,num}}$.
+
+% Slide 6: annotated internal structure; V = I R_wire is shown.
+% Auxiliary capacitors implement numerical state integrators.
+
+% Slide 7: seed energy balance. These are total seed heat capacities.
+\[
+C_{\mathrm{e}}\frac{\mathrm{d}T_{\mathrm{e}}}{\mathrm{d}t}
+=P_{\mathrm{opt}}+I^2R_{\mathrm{seed}}
+-P_{\mathrm{e-ph}}-P_{\mathrm{diff}} .
+\]
+\[
+C_{\mathrm{ph}}\frac{\mathrm{d}T_{\mathrm{ph}}}{\mathrm{d}t}
+=P_{\mathrm{e-ph}}-P_{\mathrm{sub}} .
+\]
+The quantities $C_{\mathrm{e}}$ and $C_{\mathrm{ph}}$ are total heat
+capacities of the seed, not heat capacities per unit volume.
+The electron--phonon power enters the two balances with opposite signs.
+
+% Slide 8: Joule-heating label in the feedback diagram.
+\[
+I^2R_{\mathrm{seed}} .
+\]
+The propagated-domain diagnostic $I^2R_{\mathrm{d}}$ is not added to
+the seed heat balance in this model.
+
+% Slide 9: integrated optical power over the deposited pulse.
+\[
+E_{\mathrm{dep}}=\int P_{\mathrm{opt}}(t)\,\mathrm{d}t .
+\]
+The integration is over the deposited optical pulse.
+
+\section*{Heat-transfer laws in the model notes}
+\[
+P_{\mathrm{e-ph}}
+=\Sigma V_{\mathrm{seed}}
+\left(T_{\mathrm{e}}^5-T_{\mathrm{ph}}^5\right),
+\qquad
+P_{\mathrm{sub}}
+=\beta A_{\mathrm{seed}}
+\left(T_{\mathrm{ph}}^4-T_{\mathrm{b}}^4\right) .
+\]
+The seed volume is $V_{\mathrm{seed}}$, its substrate-contact area is
+$A_{\mathrm{seed}}$, and the bath temperature is $T_{\mathrm{b}}$.
+
+\section*{Notation and source}
+Descriptive subscripts are upright. The differential symbol is written
+as $\mathrm{d}$, while variables are italic. Units are upright and
+separated from numbers by a thin space. The built-in operators
+$\min$ and $\max$ are upright.
+
+The equations were checked against the following files in the SNSPD
+simulation package:
+\begin{itemize}
+\item \texttt{models/snspd\_nbn\_v5c.lib}
+\item \texttt{circuits/bias\_tee\_and\_load.inc}
+\item \texttt{circuits/amplifier\_chain.inc}
+\end{itemize}
+This is a notation and presentation check; no model parameter or
+simulation equation was changed.
+\end{document}

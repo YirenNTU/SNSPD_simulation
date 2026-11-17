@@ -59,7 +59,7 @@ inductance remains fixed; this version does not implement \(L_k(I,T)\).
 
 | Parameter | Value | Interpretation |
 |---|---:|---|
-| `Lind` | 38 nH | Fixed device inductance used in the audited model |
+| `Lind` | 38 nH | Fixed device inductance used in this model |
 | `width`, `thickness` | 200 nm, 15 nm | Wire geometry |
 | `sheetRes`, `Tc` | 165 Ω/square, 12 K | Device inputs |
 | Inferred wire length | approximately 400.53 µm | Derived using the existing inductance-per-square approximation |

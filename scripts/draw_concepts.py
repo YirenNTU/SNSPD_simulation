@@ -1,4 +1,4 @@
-"""Audience-facing circuit and model figures, without simulation identifiers."""
+"""Circuit and model concept figures using physical quantities."""
 import json
 
 import matplotlib
