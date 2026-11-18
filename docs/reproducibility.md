@@ -35,12 +35,41 @@ is included but has not been validated by a Windows simulation run.
 5. Label any updated baseline separately; do not overwrite reference results
    merely to pass a regression check.
 
-## Release verification
+## Regression commands
 
-The experimental current-dependent inductance option has a separate
-[verification protocol and results](current_dependent_inductance.md).
-`provenance/inductance_verification.json` records its 64-run comparison with the
-unchanged default model. This record does not replace the release references.
+The first two commands run the fixed-inductance reference cases; the next two
+run the [GL option](current_dependent_inductance.md). Keep separate output
+directories for each configuration.
+
+```sh
+python3 snspd.py run --group geiger --compare --jobs 2 \
+  --output runs/lk_integration/geiger_fixed
+python3 snspd.py run --group calorimetric --compare --jobs 2 \
+  --output runs/lk_integration/cal_fixed
+python3 snspd.py run --group geiger --check-behavior --jobs 2 \
+  --inductance-model gl --depairing-ratio 1.2 --lk-zero-nh 38 \
+  --output runs/lk_integration/geiger_gl
+python3 snspd.py run --group calorimetric --check-behavior --jobs 2 \
+  --inductance-model gl --depairing-ratio 1.2 --lk-zero-nh 38 \
+  --output runs/lk_integration/cal_gl
+python3 scripts/verify_inductance.py
+python3 -m unittest discover -s tests -v
+```
+
+`--compare` applies the strict reference tolerances above. `--check-behavior`
+checks event classification, recovery, guards, optical-energy normalization, and
+the flux-integral KVL residual, allowing amplitudes and timing to change.
+`verify_inductance.py` additionally checks Geiger saturation within 1% from N=1
+to N=8, increasing calorimetric peaks over N=10, 20, 50, 100, and step convergence
+within 0.2% in amplitude and 2 ps in falling time.
+
+The [verification record](../provenance/inductance_verification.json) contains
+results and source hashes. It supplements the original release references;
+the [validation page](validation.md#current-dependent-inductance) summarizes
+the findings. To plot an existing run, use `python3 snspd.py plot` with its case ID and
+output directory; analysis and plotting read the saved `case.json`.
+
+## Release verification
 
 The release includes the latest model, earlier Geiger models, external circuit,
 32 case definitions, reference metrics, circuit figures, response CSV files,

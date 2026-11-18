@@ -1,7 +1,7 @@
 # Validation record
 
-The reference measurements were obtained on 17 November 2026 using the shared
-numerically revised v5c model. All results below are simulations.
+The fixed-inductance reference measurements were recorded on 17 November 2026;
+the GL option was checked on 18 November. All results below are simulations.
 
 ## Geiger regime
 
@@ -61,6 +61,35 @@ not the precision of the first pulse.
 
 ![Calorimetric behavior](../results/figures/calorimetric_behaviour.png)
 
+## Current-dependent inductance
+
+The [GL option](current_dependent_inductance.md) was tested with $L_0=38$ nH and
+$I_d/I_{\mathrm{sw}}=1.2$. The [verification record](../provenance/inductance_verification.json)
+contains all 64 runs and 32 checks; every check passed. All 32 default netlists
+were identical to commit `d40f46f4b8886eb2996866fb5c73768004f4a0f4`, and the
+18 Python unit tests passed. Commands and tolerances are in
+[reproducibility](reproducibility.md#regression-commands).
+
+| Configuration | Geiger | Calorimetric | Comparison |
+|---|---:|---:|---|
+| Default fixed inductance | 7/7 | 25/25 | Strict reference amplitude, timing, event, and recovery checks |
+| GL option | 7/7 | 25/25 | Original trigger classification and recovery; numerical validity |
+
+- At 0.96 Isw, Geiger peaks differed by 0.00507% between N=1 and N=8. The 1 V N=1 case
+  remained below threshold, while N=8 triggered. Dark inputs produced no events.
+- For the 30 pF calorimetric circuit at 0.90 Isw, peaks increased from 24.001 to
+  45.649 mV over N=10, 20, 50, 100. The low-energy inversion persisted: N=1 and
+  N=4 gave 17.763 and 17.303 mV.
+- At N=10 in the same circuit, the 90–10% output fall increased from 1.657 to
+  1.977 ns over bias fractions 0.60, 0.70, 0.80, 0.90, and 0.96.
+- Both modes recovered in the 800 ns observations without additional events.
+
+Across four GL step-refinement pairs, the largest peak change was 0.00469% and
+the largest falling-time change was 0.00338 ps. Numerical guards remained
+inactive, with maximum sampled $|I|/I_d=0.827$ and KVL residual below 0.000733%.
+All nine cases overlapping the [controlled recovery experiment](../experiments/falling_time/README.md)
+reproduced its recorded peak amplitudes and falling times exactly.
+
 ## Measurement definitions
 
 - **Output peak:** maximum amplifier output after subtracting the time-weighted
@@ -78,40 +107,30 @@ not the precision of the first pulse.
 
 ### Physical consistency and validation scope
 
-The model is a physically motivated, semi-empirical approximation. Its electrical
-equation couples kinetic inductance and a nonnegative wire resistance to the
-readout circuit. In the stated seed heat balances, electron–phonon heat flow
-appears with opposite signs, so that exchange cancels when the two balances are
-added. Optical input, seed Joule heating, substrate cooling, and diffusion have
-explicit roles. These structural properties support the model's interpretation;
-they do not establish the accuracy of its parameters or domain dynamics.
+The model supports mechanism studies within the tested conditions. Numerical
+regression establishes reproducibility; quantitative experimental validation
+remains subject to the following limits:
 
-The developed domain is represented by a resistance and a boundary-evolution
-law, without its own temperature or stored thermal-energy state. Domain Joule
-heating enters the boundary-driving approximation, but its diagnostic power is
-not integrated in a separate domain energy balance. Global thermal-energy
-closure has therefore not been demonstrated. The finite-size penalty and
-prepared-bias critical scale also require independent validation.
+- **Domain energy:** electron–phonon exchange cancels between the two seed heat
+  balances, but the propagated domain has no independent thermal-energy state.
+  Its diagnostic Joule power is not a separate energy balance. Global thermal
+  closure, the finite-size penalty, and the prepared-bias critical scale require
+  independent validation.
+- **Operating inputs:** switching current is supplied separately at each bath
+  temperature, and gain calibration varies between some cases. Optical energy
+  and the GL parameters are not independently calibrated. The GL law's
+  [near-transition scope](current_dependent_inductance.md#constitutive-law-and-scope)
+  does not extend to physical validation at the low-temperature Geiger point.
+- **Numerics:** the fixed-model integral KVL residual reaches approximately
+  0.43%, normalized by $L_k I_b$. Step convergence alone does not establish exact
+  internal balances or material-parameter accuracy.
+- **Detector performance:** the low-energy peak inversion prevents a validated
+  one-to-one amplitude-to-energy calibration. Energy resolution, detection
+  efficiency, stochastic dark counts, noise, and timing jitter are not established.
+  The [experimental overlay](response_data.md) is a waveform comparison with
+  unknown deposited energy, not a matched-energy fit.
 
-Shared equations do not establish a calibrated continuous transition between
-regimes. The switching current is supplied separately at each bath temperature,
-and some stored cases use different readout gain calibrations. Fixed kinetic
-inductance and uncalibrated deposited optical energy further limit quantitative
-comparison with experiment. The low-energy non-monotonicity reported above
-remains unresolved.
-
-The current evidence supports studying mechanisms and comparing simulated
-responses within the tested conditions. It does not support treating all
-parameter values as measured device properties, claiming full thermal-energy
-conservation, or claiming quantitative validation of calorimetric performance.
-
-### Numerical and experimental limits
-
-The integral electrical-balance residual reaches approximately 0.43%, normalized
-by Lk × Ib. Step convergence does not establish exact internal balances or physical
-parameter validity. The developed-domain energy closure, fixed kinetic inductance,
-optical-energy calibration, and amplifier approximations remain limitations.
-
-The package does not establish energy resolution, detection efficiency, noise,
-timing jitter, or agreement with measured waveforms. Passing reference comparisons
-means reproduction of the stored numerical baseline, including its known limitations.
+A predictive test requires held-out bias, temperature, and energy scans with
+common material and circuit parameters. The
+[recovery experiment](../experiments/falling_time/README.md#interpretation-and-next-measurement)
+specifies the waveform data and fit definitions needed for the falling-time comparison.

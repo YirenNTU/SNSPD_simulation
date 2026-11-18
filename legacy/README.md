@@ -15,11 +15,10 @@ contains modifications to the upstream models.
 |---|---|---|
 | `nanowireBCF` | Nonlinear inductive flux, hotspot-current plateau, current and voltage switches | Simplified Geiger pulse model |
 | `nanowireDynamic` | Nonlinear inductive flux, hotspot-resistance integrator, superconducting restoration switch | Earlier Geiger boundary-growth model |
-| `nanowireElectrothermal_NbN_v5c` in `../models/` | Fixed kinetic inductance, electron and phonon temperatures, continuous domain growth and retraction | Shared Geiger and near-transition model |
 
-The earlier models do not implement the latest model's two-temperature optical
-energy balance. Their gate pulses are trigger controls, not calibrated deposited
-energies. Their parameters should not be transferred to the latest model by name alone.
+These models use trigger-control gate pulses. The
+[v5c model](../docs/model.md) instead uses a two-temperature seed and normalized
+optical energy; parameters should not be transferred between models by name alone.
 
 ## Run an example
 

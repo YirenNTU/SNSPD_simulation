@@ -1,8 +1,7 @@
 # Recovery-time experiment
 
 Simulation study, 18 November 2026. The baseline is commit
-`cfc54bebda4ebc20d0cc99dafd733c74eb03ea32`. These are numerical experiments,
-not new laboratory measurements or a fitted replacement for the released model.
+`cfc54bebda4ebc20d0cc99dafd733c74eb03ea32`.
 
 ## Question and controls
 
@@ -25,34 +24,11 @@ sampling. A fitted time constant is not assumed to equal an electrical pole.
 
 ## Current-dependent inductance probe
 
-The trial law uses the equilibrium Ginzburg–Landau current relation near the
-critical temperature. For a reduced phase gradient q,
-
-$$
-I=\frac{3\sqrt{3}}{2} I_d q(1-q^2),\qquad
-q=\frac{2}{\sqrt{3}}\sin\!\left[\frac{1}{3}\arcsin\!\left(\frac{I}{I_d}\right)\right].
-$$
-
-The corresponding flux and differential inductance are
-
-$$
-\Phi(I)=\frac{3\sqrt{3}}{2}L_0 I_d q,
-\qquad L_{\mathrm{diff}}=\frac{d\Phi}{dI}=\frac{L_0}{1-3q^2}.
-$$
-
-This implements the quasistatic order-parameter limit discussed by
-[Clem and Kogan, Physical Review B 86, 174521 (2012)](https://doi.org/10.1103/PhysRevB.86.174521),
-particularly their GL current relation and slow-experiment inductance.
-LTspice receives the flux function; multiplying the differential inductance by
-current would implement a different constitutive law. Tests check its derivative
-against the GL current relation independently.
-
-The two trial values `Id/Isw = 1.2` and `1.5` test sensitivity; neither is a measured
-depairing current. Likewise, assigning `L0 = 38 nH` is a controlled comparison,
-not a determination of zero-current inductance. The law represents the remaining
-superconducting wire at the bath temperature and is tested here only near Tc.
-It does not resolve spatial or nonequilibrium order-parameter dynamics. Its
-numerical current guard must remain inactive for a run to pass.
+The probe uses the quasistatic near-$T_c$ law from Clem and Kogan (2012).
+Its equations, citation, and numerical guard are defined in the
+[GL reference](../../docs/current_dependent_inductance.md#constitutive-law-and-scope).
+This experiment tests `L0 = 38 nH` with `Id/Isw = 1.2` and `1.5` to assess
+sensitivity; these are trial parameters, not measurements.
 
 ## Results
 
@@ -77,18 +53,13 @@ domain perturbations therefore do not explain a substantial bias trend in this
 observable. Removing the finite-size penalty also leaves approximately 1.95 Ω
 at the end of the high-bias run; it is not an acceptable reset correction.
 
-The GL probe produces an increasing 90–10% duration with bias for both trial
-depairing currents. This identifies a candidate mechanism, not a calibrated
-device model. The N = 1, 4, 10, and 100 responses remain energy-dependent. The
-small N = 1 to N = 4 amplitude inversion persists.
+The GL probe produces an increasing 90–10% duration for both trial depairing
+currents. Energy dependence is retained, including the N=1 to N=4 peak inversion.
 
-The high-bias GL probe has one event and recovers during an 800 ns post-input
-observation. A dark case has no event. Halving the maximum time step from
-0.05 ps to 0.025 ps changes the high-bias fall duration from 1.976961 to
-1.976965 ns. The long observation uses 0.5 ps and tests recovery rather than
-precision of the leading edge. Each run records optical-energy normalization,
-temperature and flux guards, and an integral electrical balance using the actual
-flux law rather than a fixed-L approximation.
+The high-bias probe recovers over an 800 ns observation, the dark input produces
+no event, and halving the maximum step changes the fall from 1.976961 to
+1.976965 ns. The subsequent [64-run verification](../../docs/validation.md#current-dependent-inductance)
+extends these checks to both operating regimes and all packaged circuit variants.
 
 ### Fit definition matters
 
@@ -119,13 +90,6 @@ experimental energy is unknown. A closer duration alone does not establish an
 acceptable fit to the complete waveform.
 
 ## Interpretation and next measurement
-
-The strongest result of this study is that fixed inductance constrains the
-late electrical recovery in the tested configurations. A current-dependent
-inductance can restore a bias-dependent output width. Its magnitude and
-temperature dependence still require independent calibration, alongside the
-actual load and readout response. The trial law is not promoted into the
-released model.
 
 A quantitative next step requires averaged calorimetric waveforms at several
 known bias currents with fixed temperature and optical excitation, including

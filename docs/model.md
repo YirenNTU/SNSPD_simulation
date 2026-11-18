@@ -1,22 +1,16 @@
 # Detector model
 
-The original SPICE modeling framework is due to Berggren et al.,
-[“A superconducting nanowire can be modeled by using SPICE,”
-*Superconductor Science and Technology* **31**, 055010 (2018)](https://doi.org/10.1088/1361-6668/aab149).
-This project's v5c model is a subsequent electrothermal extension; its current
-closures and parameter choices are documented below. The original implementations
-and their local modifications are described in [the legacy guide](../legacy/README.md).
-
-The subcircuit `nanowireElectrothermal_NbN_v5c` combines a fixed kinetic inductance,
-a two-temperature seed, and a continuous normal-domain boundary model. Its ports
+The subcircuit `nanowireElectrothermal_NbN_v5c` combines kinetic inductance,
+a two-temperature seed, and continuous normal-domain evolution. Its ports
 are `gate`, `gatereturn`, `drain`, and `source`. The gate is a numerical optical-power
 control input; it is not a physical detector terminal.
-The [SNSPD implementation diagrams](snspd_implementation.md) show the electrical path,
-state-integrator circuits, and electrothermal dependencies.
+The [implementation reference](snspd_implementation.md) maps these quantities to
+SPICE elements; [model lineage](model_lineage.md) documents the Berggren et al.
+framework and subsequent extensions.
 
 ## State equations
 
-The electrical state follows
+With the default fixed inductance, the electrical state follows
 
 \[
 L_k\frac{dI}{dt}=V_{\mathrm{drain}}-V_{\mathrm{source}}
@@ -55,12 +49,13 @@ F_{\mathrm{penalty}}=F_0(1-T_b/T_c)^p
 \]
 
 The critical scale \(R_c\) is evaluated at the prepared bias. This closure can make
-larger high-bias domains retract more slowly. It is a compact approximation, not
-an independently validated material law. The developed domain does not have an
-independent thermal-energy state; its Joule diagnostic is not a global energy balance.
+larger high-bias domains retract more slowly. The developed domain has no
+independent thermal-energy state. The consequences of this phenomenological
+closure are described in [validation](validation.md#physical-consistency-and-validation-scope).
 
-There is no operating-mode selector, event timer, or reset switch. The kinetic
-inductance remains fixed; this version does not implement \(L_k(I,T)\).
+There is no operating-mode selector, event timer, or reset switch. The optional
+[GL inductance law](current_dependent_inductance.md) replaces the fixed electrical
+inductance while retaining these thermal equations and the inferred geometry.
 
 ## Principal parameters
 

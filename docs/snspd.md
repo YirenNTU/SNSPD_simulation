@@ -10,19 +10,13 @@ current redistribution changes the Joule heating.
 
 | Component or state | Function |
 |---|---|
-| Kinetic inductance, $L_k$ | Limits how quickly detector current can change; fixed in this model |
+| Kinetic inductance, $L_k$ | Limits how quickly detector current can change; fixed by default |
 | Seed electrons, $T_e$ | Receive optical power and seed Joule heating; lose heat to phonons and the surrounding wire |
 | Seed phonons, $T_{ph}$ | Exchange heat with electrons and transfer heat to the substrate |
 | Seed resistance, $R_{seed}$ | Changes continuously with temperature and current |
 | Normal-domain resistance, $R_d$ | Tracks domain formation, growth, and retraction beyond the seed |
 | External circuit | Diverts current during the resistive event and shapes the measured pulse |
 
-The four dynamic states are current, two seed temperatures, and domain resistance.
-The domain has no independent thermal-energy state; its Joule diagnostic is not
-added to the seed heat balance. Geiger and near-transition cases use the same
-equations with different bath temperatures, bias currents, and optical inputs.
-
-The [model reference](model.md) is the equation and parameter reference.
-The [implementation guide](snspd_implementation.md) maps those quantities to
-SPICE elements. The [earlier Geiger models](../legacy/README.md) use separate,
-simpler switching and boundary-growth representations.
+The figure shows the default model. See [model equations](model.md), the optional
+[current-dependent inductance](current_dependent_inductance.md), and the
+[SPICE element mapping](snspd_implementation.md) for implementation details.
